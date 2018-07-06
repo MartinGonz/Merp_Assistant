@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AF } from './../../providers/af';
 import { UserProvider } from './../../providers/user/user';
-import { FirebaseListObservable} from 'angularfire2/database';
+import { AngularFireList} from 'angularfire2/database';
 import { CurrentGamesPage} from '../../pages/current-games/current-games';
 /**
  * Generated class for the CreateGamePage page.
@@ -18,19 +18,19 @@ import { CurrentGamesPage} from '../../pages/current-games/current-games';
 export class CreateGamePage {
   error;
 
-  public games : FirebaseListObservable<any>;
+  public games : AngularFireList<{}>;
 
-  public gameName : string; 
+  public gameName : string;
 
   public players : any;
- 
 
-  private users : FirebaseListObservable<any[]>;
+
+  private users : AngularFireList<{}>;
 
   public menuIcon: string = this.af.menuIcon ;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public af:AF, private usersProvideer:UserProvider) {
-  
+
   this.users = this.usersProvideer.getAllUsers();
   this.games = this.af.getAllGames();
 
@@ -39,11 +39,11 @@ export class CreateGamePage {
   createGame(){
     if(this.gameName!=null&&this.players!=null){
       let game = {
-        gameMaster: this.af.currentUser, 
+        gameMaster: this.af.currentUser,
         gameName:this.gameName,
         players:null
       }
-      
+
       let gameKey = this.games.push(game).key;
       this.notifyPlayerInvite(this.players,gameKey,this.gameName,this.af.user.displayName)
       this.usersProvideer.setGameInUser(this.af.currentUser,gameKey)
@@ -56,7 +56,7 @@ export class CreateGamePage {
 
   notifyPlayerInvite(players:string[],gamekey:string,gameName:string,gameMasterName:string){
     players.forEach(element => {
-      if (element!= this.af.currentUser) {  
+      if (element!= this.af.currentUser) {
       let playerInvite = {
         gameMaster:gameMasterName,
         gameKey:gamekey,

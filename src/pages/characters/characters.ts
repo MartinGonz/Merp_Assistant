@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 import { IonicPage, NavController} from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AF } from './../../providers/af';
-import { FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireList } from 'angularfire2/database';
 import { PlayingTabsPage } from '../../pages/playing-tabs/playing-tabs';
 
 
@@ -13,7 +13,7 @@ import { PlayingTabsPage } from '../../pages/playing-tabs/playing-tabs';
   templateUrl: 'characters.html',
 })
 export class CharactersPage {
-  public characters: FirebaseListObservable<any>;
+  public characters: AngularFireList<any>;
 
   public menuIcon: string = this.af.menuIcon ;
 

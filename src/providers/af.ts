@@ -1,16 +1,16 @@
 import {Injectable, NgZone} from "@angular/core";
 import {AngularFireAuth} from 'angularfire2/auth';
-import {AngularFireDatabase,FirebaseListObservable} from 'angularfire2/database';
+import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
 import {UserProvider,USER} from  './user/user'
-
-
+import {Observable} from "rxjs/Observable";
 
 export interface GAME{
-  gameMaster : string ; 
+  key:string;
+  gameMaster : string ;
   gameName:string;
-  players : FirebaseListObservable<any[]>;
-  messages: FirebaseListObservable<any[]>;
-  notes : FirebaseListObservable<any[]>;
+  players : AngularFireList<any>;
+  messages: AngularFireList<any>;
+  notes : AngularFireList<any>;
 }
 
 export interface USER_TO_DISPLAY{
@@ -18,27 +18,46 @@ export interface USER_TO_DISPLAY{
   character:any;
 }
 
+export interface PLAYER{
+  character: string;
+  playerId:string;
+}
+
+export interface CHARACTER{
+  key: string;
+  stats: any;
+  perception: any;
+  health: any;
+  movement: any;
+  weapons: any;
+  generals: any;
+  subtrefuge: any;
+  magic: any;
+  defense: any;
+  name: string;
+}
+
 @Injectable()
 export class AF {
-  
+
   public displayName : string;
   public email : string;
   public currentUser : string = null;
-  public currentGame : string; 
+  public currentGame : string;
   public games : any[] = [];
 
   private isGM = false;
-  
-  public messages : FirebaseListObservable<any[]>;
-  public notes : FirebaseListObservable<any[]>;
+
+  public messages : AngularFireList<any>;
+  public notes : AngularFireList<any>;
 
   public usersToDisplay : USER_TO_DISPLAY[];
-   
+
   user: USER = {} as USER;
 
   userToInvite :USER = { } as USER;
 
-  menuIcon = "https://firebasestorage.googleapis.com/v0/b/merp-64b26.appspot.com/o/diceIcon.png?alt=media&token=a7bcb3e7-0cd1-414c-a403-c192095e16fa"; 
+  menuIcon = "https://firebasestorage.googleapis.com/v0/b/merp-64b26.appspot.com/o/diceIcon.png?alt=media&token=a7bcb3e7-0cd1-414c-a403-c192095e16fa";
 
   public selectedCharacter: any;
 
@@ -46,7 +65,7 @@ export class AF {
   constructor(private ngZone: NgZone,public db: AngularFireDatabase,public  afAuth: AngularFireAuth, public userProvider:UserProvider) {
      db.database.goOnline;
      afAuth.authState;
-     
+
      }
 
 
@@ -61,7 +80,7 @@ export class AF {
   getCharacters(){
     return this.user.characters;
   }
-  
+
   getProfilePic(uid:string){
     return this.db.object('users/'+uid+'/photoURL');
   }
@@ -72,7 +91,7 @@ export class AF {
              return (this.currentUser!=undefined&&this.currentUser!=null)
   }
 
-  saveCharacter(key:string,stats,perception,health,movement,weapons,generals,subtrefuge,magic,defense,name,armour:string){  
+  saveCharacter(key:string,stats,perception,health,movement,weapons,generals,subtrefuge,magic,defense,name,armour:string){
       let keyAtEnd = "";
       if(key==""){
              var characterCreate = {
@@ -119,7 +138,7 @@ export class AF {
   getGames(){
     return this.games
   }
-  
+
   getPlayerInvites(){
     return this.user.invites;
   }
@@ -154,8 +173,8 @@ export class AF {
 
   newCharacter(){
 		let STATS = {INT:0,AGI:0,PRE:0,CON:0,I:0,STR:0};
-		let PERCEPTION = {PR:0,BPR:0,RPR:0};	
-		let HEALTH = {HP:0,BHP:0,RHP:0};	
+		let PERCEPTION = {PR:0,BPR:0,RPR:0};
+		let HEALTH = {HP:0,BHP:0,RHP:0};
 		let MOVEMENT = {NA:0,BNA:0,RNA:0,
 						LE:0,BLE:0,RLE:0,
 						HL:0,BHL:0,RHL:0,
@@ -183,45 +202,44 @@ export class AF {
 	}
 
   getPlayers(gameKey){
-    return this.db.list('games/'+gameKey+'/players');
+    let players = (<Observable<PLAYER[]>>this.db.list('games/' + gameKey + '/players').valueChanges());
+    return players;
   }
 
   processGame(gameObject:any){
     this.games = []
     let gameToLoad = null ;
-     gameObject.forEach(element3 => {     
+     gameObject.forEach(element3 => {
          gameToLoad = {
           gameKey : element3.$key,
           gameName: element3.gameName,
-          gameMaster: element3.gameMaster,  
+          gameMaster: element3.gameMaster,
           players: element3.players
             }
-         this.games.push(gameToLoad);  
+         this.games.push(gameToLoad);
        });
   }
   getGameByKey(key:string){
     let as =  this.db.object('games/'+ key)
-    return as; 
+    return as;
   }
 
   getGamesFromUser(){
-  this.db.list('users/'+this.currentUser+'/games').subscribe(element => {
+  (<Observable<GAME[]> >this.db.list('users/' + this.currentUser + '/games').valueChanges())
+    .forEach( element => {
     element.forEach(element2 => {
-       this.processGame(this.getGameByKey(element2.game))
+       this.processGame(this.getGameByKey(element2.key))
        });
     });
   }
- 
+
   getAllGames(){
     return this.db.list('games')
   }
 
   setMessages(){
-    this.messages = this.db.list('games/'+this.currentGame+'/messages',{
-      query:{
-        limitToLast:15
-      }
-    })
+    this.messages = this.db.list('games/'+this.currentGame+'/messages', ref =>
+      ref.orderByKey().limitToLast(15))
   }
 
   getAllMessages(){
@@ -258,8 +276,9 @@ export class AF {
   }
 
  createCharacterSubscriber(charKey:string,uid:string){
-    return this.db.object('users/'+uid+'characers/'+charKey).subscribe(element =>{
-      this.selectedCharacter = { 
+   (<Observable<CHARACTER>>this.db.object('users/' + uid + 'characers/' + charKey).valueChanges())
+      .forEach(element =>{
+      this.selectedCharacter = {
                   key: charKey,
                   stats: element.stats,
                   perception: element.perception,

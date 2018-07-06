@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/map';
-import {AngularFireDatabase,FirebaseListObservable} from 'angularfire2/database';
+import {AngularFireDatabase,AngularFireList} from 'angularfire2/database';
+import {Observable} from "rxjs/Observable";
 
 
 
@@ -11,9 +12,9 @@ export interface USER {
     displayName: string;
     email: string;
     photoURL: string;
-    invites:FirebaseListObservable<any[]>;
-    characters : FirebaseListObservable<any[]>;
-    games: FirebaseListObservable<GAME_PER_USER[]>
+    invites:AngularFireList<any>;
+    characters : AngularFireList<any>;
+    games: AngularFireList<GAME_PER_USER[]>
 };
 
 export interface GAME_PER_USER{
@@ -21,7 +22,7 @@ export interface GAME_PER_USER{
 }
 
 export interface CHARACTER{
-  $key:string;
+  key:string;
   stats : any;
   perception:any;
   movement:any;
@@ -38,7 +39,7 @@ export interface CHARACTER{
 @Injectable()
 export class UserProvider {
 
-  private users : FirebaseListObservable<any[]>;
+  private users : AngularFireList<any>;
 
   constructor(public db:AngularFireDatabase) {
     this.users = this.db.list('users')
@@ -46,11 +47,11 @@ export class UserProvider {
 
   getUser(uid:string){
     var result:USER = {} as USER;
-    this.db.object('users/'+uid).forEach(element => {
+    (<Observable<USER>>this.db.object('users/' + uid).valueChanges()).forEach(element => {
             result.providerId = element.providerId;
             result.email = element.email;
             result.photoURL=element.photoURL;
-            result.displayName = element.displayName;   
+            result.displayName = element.displayName;
             result.characters = this.db.list('users/'+uid+'/characters');
             result.invites = this.db.list('users/'+uid+'/invites');
             result.games = this.db.list('users/'+uid+'/games');
@@ -67,8 +68,8 @@ export class UserProvider {
   }
   getCharacter(uid:string,charId:string){
   let characterToLoad = {} as CHARACTER;
-   this.db.object('users/'+uid+'/characters/'+charId).forEach(character =>{
-      characterToLoad.$key = charId
+    (<Observable<CHARACTER>>this.db.object('users/' + uid + '/characters/' + charId).valueChanges()).forEach(character =>{
+      characterToLoad.key = charId
       characterToLoad.stats = character.stats
       characterToLoad.perception = character.perception
       characterToLoad.health = character.health
@@ -104,6 +105,6 @@ export class UserProvider {
 
   }
 
- 
+
 
 }

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Content } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
-import {FirebaseListObservable} from 'angularfire2/database';
+import {AngularFireList} from 'angularfire2/database';
 import { AF } from './../../providers/af';
 
 
@@ -21,8 +21,8 @@ export class ChatPage {
 
   @ViewChild(Content) content: Content;
 
-  public messages: FirebaseListObservable<any[]>
-  public currentUser ; 
+  public messages: AngularFireList<{}>
+  public currentUser ;
   public messageToSend:string = '';
   public hideTime = false;
 
@@ -31,14 +31,14 @@ export class ChatPage {
         this.af.setMessages();
         this.messages = this.af.messages;
         this.currentUser=this.af.currentUser;
-    } 
-  
+    }
+
   }
- 
+
   ionViewDidEnter() {
       this.content.scrollToBottom();
     }
-  
+
 
   gameIsLoaded(){
     let result =  (this.af.currentGame!=null)&&(this.af.currentGame!=undefined)
@@ -51,7 +51,7 @@ export class ChatPage {
       this.ionViewDidEnter()
     }
   }
-  
+
 
 
   loadAllMessages(){

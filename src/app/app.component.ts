@@ -16,8 +16,8 @@ import { CritsAndDmgPage} from '../pages/crits-and-dmg/crits-and-dmg'
 
 
 @Component({
-  templateUrl: 'app.html'
-})
+  templateUrl: 'app.html'})
+
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
@@ -37,16 +37,14 @@ export class MyApp {
         { title: 'Damage & Critical', component: CritsAndDmgPage },
         { title: 'Create Game', component: CreateGamePage},
         { title: 'Current Games', component: CurrentGamesPage},
-        { title: 'Game Invites', component: InvitesPage}        
+        { title: 'Game Invites', component: InvitesPage}
 
       ];
     const authObserver = afAuth.authState.subscribe( user => {
       // used for an example of ngFor and navigation
       if (user) {
         this.af.setCurrentUser(user);
-       this.af.getProfilePic(user.uid).forEach(element => {
-         this.profilePic = element.$value;  
-        });;
+        this.profilePic = this.af.getProfilePic(user.uid).toString();
         authObserver.unsubscribe();
         this.rootPage = HomePage;
       } else {
@@ -56,14 +54,14 @@ export class MyApp {
     });
 
 }
-  
+
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      
+
      // let db = new SQLite();
      // db.openDataBase({name:"data.db",location:"default"}).then(()=>{
      //   db.executeSql("CREATE TABLE IF NOT EXISTS   ")
@@ -73,8 +71,8 @@ export class MyApp {
 
   logout(){
     this.afAuth.auth.signOut()
-    this.nav.setRoot(LoginPage); 
- 
+    this.nav.setRoot(LoginPage);
+
   }
 
   openPage(page) {

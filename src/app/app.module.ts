@@ -54,7 +54,7 @@ import { UserProvider } from '../providers/user/user';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AF } from './../../providers/af';
 import { UserProvider} from './../../providers/user/user';
-import { FirebaseListObservable} from 'angularfire2/database';
+import { AngularFireList} from 'angularfire2/database';
 import { CharactersPage} from '../../pages/characters/characters';
 
 /**
@@ -20,15 +20,15 @@ export class InvitesPage {
 
   public menuIcon: string = this.af.menuIcon ;
 
-  private playerInvites : FirebaseListObservable<any>;
+  private playerInvites : AngularFireList<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private af:AF,private userProv: UserProvider) {
   this.playerInvites = this.af.getPlayerInvites()
-  console.log(this.playerInvites)  
+  console.log(this.playerInvites)
   }
 
   deleteInvite(invite:string){
-   this.af.deleteInvite(invite); 
+   this.af.deleteInvite(invite);
   }
 
   joinGame(gameKey:string,inviteKey:string){

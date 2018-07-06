@@ -5,12 +5,16 @@ import { UserProvider } from './../../providers/user/user';
 import { PlayingTabsPage } from '../../pages/playing-tabs/playing-tabs';
 
 
-export interface GAME{
-  gameMaster : string ; 
-  gameName:string;
-  players : any[];
-}
 
+export interface GAME{
+  gameMaster : string ;
+  gameName:string;
+  players : PLAYER[];
+}
+export interface PLAYER{
+  character: string;
+  playerId:string;
+}
 
 @IonicPage()
 @Component({
@@ -23,7 +27,7 @@ export class CurrentGamesPage {
   gamesList : any;
 
   public menuIcon: string = this.af.menuIcon ;
-  
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private af:AF,private userProvider:UserProvider) {
   this.gamesList= this.af.games
   console.log(this.gamesList)
@@ -37,28 +41,29 @@ export class CurrentGamesPage {
     let listUsersToDisplay:USER_TO_DISPLAY[]=[];
 
     let players = this.af.getPlayers(gameKey);
-    players.forEach(array => {
+    players.forEach(array=> {
       array.forEach(element => {
-       let characterToDisplay = this.userProvider.getCharacter(element.playerId,element.character) 
- 
-      if(currentUser != element.playerId){
-        let userToDisplay : USER_TO_DISPLAY = {
-          userId: element.playerId,
-          character: characterToDisplay,
-        } 
-        listUsersToDisplay.push(userToDisplay);
-      }
-      if(currentUser == gameMaster){
-           canPlay= true;
-           this.af.setGM();
-         }  
-        else if (currentUser==element.playerId){
-            this.af.selectedCharacter = characterToDisplay;
-            canPlay = true;
-            console.log(this.af.selectedCharacter)
-         }  
-         });
+        let characterToDisplay = this.userProvider.getCharacter(element.playerId, element.character)
+
+        if (currentUser != element.playerId) {
+          let userToDisplay: USER_TO_DISPLAY = {
+            userId: element.playerId,
+            character: characterToDisplay,
+          }
+          listUsersToDisplay.push(userToDisplay);
+        }
+        if (currentUser == gameMaster) {
+          canPlay = true;
+          this.af.setGM();
+        }
+        else if (currentUser == element.playerId) {
+          this.af.selectedCharacter = characterToDisplay;
+          canPlay = true;
+          console.log(this.af.selectedCharacter)
+        }
+      });
     });
+
     if (canPlay) {
       this.af.setUsersToDisplay(listUsersToDisplay)
       console.log(listUsersToDisplay)
