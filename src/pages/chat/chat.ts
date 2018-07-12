@@ -22,7 +22,7 @@ export class ChatPage {
   @ViewChild(Content) content: Content;
 
   public messages: FirebaseListObservable<any[]>
-  public currentUser ; 
+  public currentUser ;
   public messageToSend:string = '';
   public hideTime = false;
 
@@ -31,14 +31,16 @@ export class ChatPage {
         this.af.setMessages();
         this.messages = this.af.messages;
         this.currentUser=this.af.currentUser;
-    } 
-  
-  }
- 
-  ionViewDidEnter() {
-      this.content.scrollToBottom();
     }
-  
+
+  }
+
+  ionViewDidEnter() {
+    if(this.gameIsLoaded()){
+      this.content.scrollToBottom();
+      }
+    }
+
 
   gameIsLoaded(){
     let result =  (this.af.currentGame!=null)&&(this.af.currentGame!=undefined)
@@ -51,7 +53,7 @@ export class ChatPage {
       this.ionViewDidEnter()
     }
   }
-  
+
 
 
   loadAllMessages(){

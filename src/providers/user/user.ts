@@ -33,6 +33,7 @@ export interface CHARACTER{
   defense:any;
   name:string;
   armourType:string;
+  inventory:any;
 }
 
 @Injectable()
@@ -50,7 +51,7 @@ export class UserProvider {
             result.providerId = element.providerId;
             result.email = element.email;
             result.photoURL=element.photoURL;
-            result.displayName = element.displayName;   
+            result.displayName = element.displayName;
             result.characters = this.db.list('users/'+uid+'/characters');
             result.invites = this.db.list('users/'+uid+'/invites');
             result.games = this.db.list('users/'+uid+'/games');
@@ -104,6 +105,6 @@ export class UserProvider {
 
   }
 
- 
+
 
 }

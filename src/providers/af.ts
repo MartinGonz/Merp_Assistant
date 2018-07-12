@@ -6,7 +6,7 @@ import {UserProvider,USER} from  './user/user'
 
 
 export interface GAME{
-  gameMaster : string ; 
+  gameMaster : string ;
   gameName:string;
   players : FirebaseListObservable<any[]>;
   messages: FirebaseListObservable<any[]>;
@@ -20,33 +20,33 @@ export interface USER_TO_DISPLAY{
 
 @Injectable()
 export class AF {
-  
+
   public displayName : string;
   public email : string;
   public currentUser : string = null;
-  public currentGame : string; 
+  public currentGame : string;
   public games : any[] = [];
 
   private isGM = false;
-  
+
   public messages : FirebaseListObservable<any[]>;
   public notes : FirebaseListObservable<any[]>;
 
   public usersToDisplay : USER_TO_DISPLAY[];
-   
+
   user: USER = {} as USER;
 
   userToInvite :USER = { } as USER;
 
-  menuIcon = "https://firebasestorage.googleapis.com/v0/b/merp-64b26.appspot.com/o/diceIcon.png?alt=media&token=a7bcb3e7-0cd1-414c-a403-c192095e16fa"; 
+  menuIcon = "https://firebasestorage.googleapis.com/v0/b/merp-64b26.appspot.com/o/diceIcon.png?alt=media&token=a7bcb3e7-0cd1-414c-a403-c192095e16fa";
 
   public selectedCharacter: any;
 
 
   constructor(private ngZone: NgZone,public db: AngularFireDatabase,public  afAuth: AngularFireAuth, public userProvider:UserProvider) {
-     db.database.goOnline;
+     db.database.goOnline();
      afAuth.authState;
-     
+
      }
 
 
@@ -61,7 +61,7 @@ export class AF {
   getCharacters(){
     return this.user.characters;
   }
-  
+
   getProfilePic(uid:string){
     return this.db.object('users/'+uid+'/photoURL');
   }
@@ -72,7 +72,7 @@ export class AF {
              return (this.currentUser!=undefined&&this.currentUser!=null)
   }
 
-  saveCharacter(key:string,stats,perception,health,movement,weapons,generals,subtrefuge,magic,defense,name,armour:string){  
+  saveCharacter(key:string,stats,perception,health,movement,weapons,generals,subtrefuge,magic,defense,name,armour:string,inventory){
       let keyAtEnd = "";
       if(key==""){
              var characterCreate = {
@@ -88,7 +88,8 @@ export class AF {
                 magic:magic,
                 defense:defense,
                 armourType:armour,
-                timestamp:Date.now()
+                timestamp:Date.now(),
+                inventory:inventory
             }
          keyAtEnd = this.user.characters.push(characterCreate).key;
       }else{
@@ -105,7 +106,8 @@ export class AF {
           magic:magic,
           defense:defense,
           armourType:armour,
-          timestamp:Date.now()
+          timestamp:Date.now(),
+          inventory:inventory
       }
       this.user.characters.update(key,characterUpdate);
     }
@@ -119,7 +121,7 @@ export class AF {
   getGames(){
     return this.games
   }
-  
+
   getPlayerInvites(){
     return this.user.invites;
   }
@@ -154,8 +156,8 @@ export class AF {
 
   newCharacter(){
 		let STATS = {INT:0,AGI:0,PRE:0,CON:0,I:0,STR:0};
-		let PERCEPTION = {PR:0,BPR:0,RPR:0};	
-		let HEALTH = {HP:0,BHP:0,RHP:0};	
+		let PERCEPTION = {PR:0,BPR:0,RPR:0};
+		let HEALTH = {HP:0,BHP:0,RHP:0};
 		let MOVEMENT = {NA:0,BNA:0,RNA:0,
 						LE:0,BLE:0,RLE:0,
 						HL:0,BHL:0,RHL:0,
@@ -179,7 +181,9 @@ export class AF {
 					UMO:0,UMO2:0,BMUMO:0,BIUMO:0,RUMO:0,
 					DS:0,DS2:0,BMDS:0,BIDS:0,RDS:0};
     let DEFENSE = { DB:0,BDB:0,RDB:0};
-   return this.saveCharacter("",STATS,PERCEPTION,HEALTH,MOVEMENT,WEAPONS,GENERALS,SUBTREFUGE,MAGIC,DEFENSE,"","")
+    let INVENTORY={ ITEM_SET:{HELMET:null,ACCESORIES:[],MAIN:null,CHEST:null,SECONDARY:null,GLOVES:null,PANTS:null,BOOTS:null},
+                    BAG:[]};
+   return this.saveCharacter("",STATS,PERCEPTION,HEALTH,MOVEMENT,WEAPONS,GENERALS,SUBTREFUGE,MAGIC,DEFENSE,"","", INVENTORY)
 	}
 
   getPlayers(gameKey){
@@ -189,19 +193,19 @@ export class AF {
   processGame(gameObject:any){
     this.games = []
     let gameToLoad = null ;
-     gameObject.forEach(element3 => {     
+     gameObject.forEach(element3 => {
          gameToLoad = {
           gameKey : element3.$key,
           gameName: element3.gameName,
-          gameMaster: element3.gameMaster,  
+          gameMaster: element3.gameMaster,
           players: element3.players
             }
-         this.games.push(gameToLoad);  
+         this.games.push(gameToLoad);
        });
   }
   getGameByKey(key:string){
     let as =  this.db.object('games/'+ key)
-    return as; 
+    return as;
   }
 
   getGamesFromUser(){
@@ -211,7 +215,7 @@ export class AF {
        });
     });
   }
- 
+
   getAllGames(){
     return this.db.list('games')
   }
@@ -259,7 +263,7 @@ export class AF {
 
  createCharacterSubscriber(charKey:string,uid:string){
     return this.db.object('users/'+uid+'characers/'+charKey).subscribe(element =>{
-      this.selectedCharacter = { 
+      this.selectedCharacter = {
                   key: charKey,
                   stats: element.stats,
                   perception: element.perception,
@@ -277,7 +281,7 @@ export class AF {
 
   oldCharNewGame(charKey:string){
     let char = this.userProvider.getCharacter(this.currentUser,charKey)
-    return this.saveCharacter("",char.stats,char.perception,char.health,char.movement,char.weapons,char.generals,char.subtrefuge,char.magic,char.defense,'',char.armourType)
+    return this.saveCharacter("",char.stats,char.perception,char.health,char.movement,char.weapons,char.generals,char.subtrefuge,char.magic,char.defense,'',char.armourType,char.inventory)
   }
 
 

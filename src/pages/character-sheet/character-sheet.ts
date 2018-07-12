@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AF} from './../../providers/af';
-import { NavController,MenuController } from 'ionic-angular';
+import {NavController, MenuController, ModalController} from 'ionic-angular';
+import {EQUIPMENT, InventoryPage, ITEM} from "../inventory/inventory";
 
 
 @Component({
@@ -9,8 +10,8 @@ import { NavController,MenuController } from 'ionic-angular';
 })
 
 export class CharacterSheet  {
-  
-  constructor(public afService:AF,public navCtl:NavController, public menuCtl: MenuController) {
+
+  constructor( public modalCtrl:ModalController,public afService:AF,public navCtl:NavController, public menuCtl: MenuController) {
 
 		var character = this.afService.selectedCharacter
 		if(character==null){
@@ -22,7 +23,8 @@ export class CharacterSheet  {
 		}
 	}
 
-public menuIcon: string = this.afService.menuIcon ;
+public INVENTORY:{itemSet:EQUIPMENT,
+                  bag:any[]};
 
 public CHARACTER_KEY:string ="";
 
@@ -32,9 +34,9 @@ public SELECTED_CHAR;
 
 public STATS = {INT:0,AGI:0,PRE:0,CON:0,I:0,STR:0};
 
-public PERCEPTION = {PR:0,BPR:0,RPR:0};	
+public PERCEPTION = {PR:0,BPR:0,RPR:0};
 
-public HEALTH = {HP:0,BHP:0,RHP:0};	
+public HEALTH = {HP:0,BHP:0,RHP:0};
 
 public MOVEMENT = {NA:0,BNA:0,RNA:0,
 				   LE:0,BLE:0,RLE:0,
@@ -73,7 +75,7 @@ public rolls=[{name:'hundred',value:0},
                    {name:'four',value:0},
                    {name:'two',value:0}];
 
-public coin = [{state:''},
+public coin = [{state:'-----'},
 					{state:'Fail'},
 					{state:'Succes'}];
 
@@ -81,10 +83,98 @@ public result ;
 
 public equipedArmour = 'NA';
 
+public openInventory(){
+  let modal = this.modalCtrl.create(InventoryPage);
+  modal.onDidDismiss(inventory=>{
+    this.INVENTORY= inventory;
+    this.loadEquipmentBonus();
+  });
+  modal.present();
+
+}
+private loadEquipmentBonus(){
+  this.sortSetBonus(this.INVENTORY.itemSet.helmet);
+  this.sortSetBonus(this.INVENTORY.itemSet.chest);
+  this.sortSetBonus(this.INVENTORY.itemSet.gloves);
+  this.sortSetBonus(this.INVENTORY.itemSet.main);
+  this.sortSetBonus(this.INVENTORY.itemSet.secondary);
+  this.sortSetBonus(this.INVENTORY.itemSet.helmet);
+  this.sortAccesoriesBonus(this.INVENTORY.itemSet.accesories);
+}
+
+private sortSetBonus(item:ITEM){
+    switch (item.type) {
+      case "WEAPON":
+        this.addWeaponBonus(item);
+        if(item.statBonus!=null&&item.statBonus!=undefined){
+          this.addStatBonus(item);
+        }
+        break;
+      case "HELMET":
+        this.addArmourBonus(item);
+        if(item.statBonus!=null&&item.statBonus!=undefined){
+          this.addStatBonus(item);
+        }
+        break;
+      case "CHEST":
+        this.addArmourBonus(item);
+        if(item.statBonus!=null&&item.statBonus!=undefined){
+          this.addStatBonus(item);
+        }
+        break;
+      case "GLOVES":
+        this.addArmourBonus(item);
+        if(item.statBonus!=null&&item.statBonus!=undefined){
+          this.addStatBonus(item);
+        }
+        break;
+      case "PANTS":
+        this.addArmourBonus(item);
+        if(item.statBonus!=null&&item.statBonus!=undefined){
+          this.addStatBonus(item);
+        }
+        break;
+      case "BOOTS":
+        this.addArmourBonus(item);
+        if(item.statBonus!=null&&item.statBonus!=undefined){
+          this.addStatBonus(item);
+        }
+        break;
+      default: break;
+    }
+}
+
+private addArmourBonus(item:ITEM){
+    switch (item.subType){
+      case  "NA":
+        this.MOVEMENT.BNA += item.skillBonus;
+        break;
+      case  "LE":
+        this.MOVEMENT.BLE += item.skillBonus;
+        break;
+      case  "HL":
+        this.MOVEMENT.BHL += item.skillBonus;
+        break;
+      case  "CM":
+        this.MOVEMENT.BCM += item.skillBonus;
+        break;
+      case  "PL":
+        this.MOVEMENT.BPL += item.skillBonus;
+        break;
+      default: break;
+    }
+  }
+  private addWeaponBonus(item:ITEM){
+
+}
+  private addStatBonus(item:ITEM){
+
+}
+
 public getDiceRoll(dice:number,max:number) {
     this.rolls[dice].value = Math.floor(Math.random() * max)+1 ;
 	};
-    
+
 public  armourType(type:string) {
       return (type==this.equipedArmour);
     }
@@ -109,45 +199,45 @@ public setStats(ability5:number,ability2:number,bonusMix:number,bonusItem:number
 		this.result[response].reduction = (reduction>100 ? 100 : (reduction * 5) );
 		}
 	};
-	
+
 public updateResutls(value:number,stat:string){
 		switch (stat) {
 			case "INT":
-				this.result[16].stat = value; 
-				this.result[19].stat = value; 
-				this.result[21].stat = value; 
+				this.result[16].stat = value;
+				this.result[19].stat = value;
+				this.result[21].stat = value;
 				break;
 			case "STR":
-				this.result[3].stat = value; 
-				this.result[4].stat = value; 
-				this.result[7].stat = value; 
-				this.result[8].stat = value; 
-				this.result[9].stat = value; 
-				this.result[12].stat = value; 
-				break;	
+				this.result[3].stat = value;
+				this.result[4].stat = value;
+				this.result[7].stat = value;
+				this.result[8].stat = value;
+				this.result[9].stat = value;
+				this.result[12].stat = value;
+				break;
 			case "CON":
-				this.result[5].stat =value; 
+				this.result[5].stat =value;
 				break;
 			case "AGI":
-				this.result[0].stat = value; 
-				this.result[1].stat = value; 
+				this.result[0].stat = value;
+				this.result[1].stat = value;
 				this.result[2].stat = value;
-				this.result[10].stat = value; 
-				this.result[11].stat = value; 
-				this.result[13].stat = value; 
-				this.result[15].stat = value; 
-				this.result[23].stat = value; 
-				this.result[24].stat = value;  
+				this.result[10].stat = value;
+				this.result[11].stat = value;
+				this.result[13].stat = value;
+				this.result[15].stat = value;
+				this.result[23].stat = value;
+				this.result[24].stat = value;
 				break;
 			case "PER":
-				this.result[6].stat= value; 
-				this.result[18].stat= value; 
+				this.result[6].stat= value;
+				this.result[18].stat= value;
 				break;
 			case "I":
-				this.result[14].stat = value; 
-				this.result[20].stat = value; 
-				this.result[22].stat = value; 
-				break;	
+				this.result[14].stat = value;
+				this.result[20].stat = value;
+				this.result[22].stat = value;
+				break;
 			default:
 				break;
 		}
@@ -155,15 +245,15 @@ public updateResutls(value:number,stat:string){
 
 	saveCharacter(){
 		if(!this.afService.isGameMaster()){
-			
+
 			this.CHARACTER_KEY = this.afService.saveCharacter(this.CHARACTER_KEY,this.STATS,this.PERCEPTION,
 			this.HEALTH,this.MOVEMENT,this.WEAPONS,this.GENERALS,
-			this.SUBTREFUGE,this.MAGIC,this.DEFENSE,this.NAME,this.equipedArmour)
+			this.SUBTREFUGE,this.MAGIC,this.DEFENSE,this.NAME,this.equipedArmour, this.INVENTORY)
 		}
 	}
 
 	loadCharacter(char){
-			
+
 			console.log(char);
 			this.CHARACTER_KEY = char.$key;
 			this.STATS =char.stats;
@@ -185,8 +275,8 @@ public updateResutls(value:number,stat:string){
 		this.CHARACTER_KEY="";
 		this.NAME ="";
 		this.STATS = {INT:0,AGI:0,PRE:0,CON:0,I:0,STR:0};
-		this.PERCEPTION = {PR:0,BPR:0,RPR:0};	
-		this.HEALTH = {HP:0,BHP:0,RHP:0};	
+		this.PERCEPTION = {PR:0,BPR:0,RPR:0};
+		this.HEALTH = {HP:0,BHP:0,RHP:0};
 		this.MOVEMENT = {NA:0,BNA:0,RNA:0,
 						LE:0,BLE:0,RLE:0,
 						HL:0,BHL:0,RHL:0,
@@ -217,7 +307,7 @@ public updateResutls(value:number,stat:string){
 
 
 	roundTo5(num:number){
-	
+
 	var resto = (num / 10 )% 0.5, bool = resto >= 0.25;
 
 	return num - resto + (bool ? 0.5 : 0);
@@ -234,10 +324,6 @@ public updateResutls(value:number,stat:string){
 		return 	component == 'portal' ;
 	}
 
-	openMenu(){ 
-   		this.menuCtl.open();
-	  }
-	
 	getResult(){
 			return [{attr:'noArmour',ability5: 5 *this.MOVEMENT.NA,ability2: 2 *0,reduction: 5 *this.MOVEMENT.RNA,bonusItem: 5 *0,bonusMix: 5 *this.MOVEMENT.BNA,stat:this.STATS.AGI},
 					{attr:'leather',ability5: 5 *this.MOVEMENT.LE,ability2: 2 *0,reduction: 5 *this.MOVEMENT.RLE,bonusItem: 5 *0,bonusMix: 5 *this.MOVEMENT.BLE,stat:this.STATS.AGI},

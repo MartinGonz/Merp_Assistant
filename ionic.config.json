@@ -1,5 +1,6 @@
 {
   "name": "roleAssitantIonic",
   "app_id": "c4e6a3ad",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {}
 }

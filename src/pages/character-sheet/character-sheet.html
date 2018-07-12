@@ -5,20 +5,22 @@
 	</button>
 	<ion-title>Character Sheet</ion-title>
   </ion-navbar>
-	
+
 </ion-header> -->
 
 <ion-content ng-class="{ isBrowserView : isBrowser== true } ">
 <br>
-<form  overflow-scroll="true" class="form conteiner "> 
+<form  overflow-scroll="true" class="form conteiner ">
 <div class="container">
 
 	<div class="com-md-12 row">
 		<input class="col-md-3 mr-5" type="string" [ngModelOptions]="{standalone: true}" [(ngModel)]="NAME" placeholder="Character Name">
-	</div>
+
+    <button ion-button color="dark" class="btn btn-default" (click)="openInventory()">Inventory</button>
+  </div>
 <!--ROW CONTAINS PERCEPTION, HALTH, MOVEMENT AND STATS-->
 	<div class="row mt-2 form-group">
-		<div class=" pull-left col-md-6 pl-0 "> 
+		<div class=" pull-left col-md-6 pl-0 ">
 		 <h4>Perception</h4>
 		 <ion-grid>
 		  <ion-row justify-content-around class="p-2">
@@ -27,14 +29,14 @@
 			  	<ion-col>Reductions</ion-col>
 			  	<ion-col>TOTAL</ion-col>
 		  </ion-row >
-		  
+
 			   <ion-row justify-content-around>
 			  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(PERCEPTION.PR,0,PERCEPTION.BPR,0,PERCEPTION.RPR,6)" [ngModelOptions]="{standalone: true}" [(ngModel)]="PERCEPTION.PR" min="0" max="20"></ion-col>
 			  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(PERCEPTION.PR,0,PERCEPTION.BPR,0,PERCEPTION.RPR,6)" [ngModelOptions]="{standalone: true}" [(ngModel)]="PERCEPTION.BPR" min="0"  max="20"></ion-col>
 			    <ion-col><input   type="number" step="1" (ngModelChange)="!setStats(PERCEPTION.PR,0,PERCEPTION.BPR,0,PERCEPTION.RPR,6)" [ngModelOptions]="{standalone: true}" [(ngModel)]="PERCEPTION.RPR" min="0"  max="20"></ion-col>
 			 	<ion-col>{{result[6].ability5 - result[6].reduction + result[6].bonusMix}} PER </ion-col>
 			  </ion-row>
-		
+
 		  </ion-grid>
 		</div>
 		<div class=" p-0">
@@ -46,14 +48,14 @@
 			  	<ion-col>Reductions</ion-col>
 			  	<ion-col>TOTAL</ion-col>
 		  </ion-row >
-		  
+
 			   <ion-row justify-content-around>
 			  	<ion-col><input     type="number" step="1" (ngModelChange)="!setStats(HEALTH.HP,0,HEALTH.BHP,0,HEALTH.RHP,5)"  [ngModelOptions]="{standalone: true}" [(ngModel)]="HEALTH.HP"  min="0" max="100"></ion-col>
 			  	<ion-col><input     type="number" step="1" (ngModelChange)="!setStats(HEALTH.HP,0,HEALTH.BHP,0,HEALTH.RHP,5)"  [ngModelOptions]="{standalone: true}" [(ngModel)]="HEALTH.BHP" min="0" max="100"></ion-col>
 			    <ion-col><input     type="number" step="1" (ngModelChange)="!setStats(HEALTH.HP,0,HEALTH.BHP,0,HEALTH.RHP,5)"  [ngModelOptions]="{standalone: true}" [(ngModel)]="HEALTH.RHP" min="0" max="100"></ion-col>
 			  	<ion-col>{{result[5].ability5 - result[5].reduction + result[5].bonusMix + result[5].stat}} HP </ion-col>
 			  </ion-row>
-		
+
 		  </ion-grid>
 		</div>
 		<div class="row col-md-12">
@@ -68,14 +70,14 @@
 				  	<ion-col>TOTAL</ion-col>
 				  	<ion-col></ion-col>
 			  </ion-row >
-			  
+
 				   <ion-row justify-content-around>
 				  	<ion-col>No Armour</ion-col>
 				  	<ion-col><input   [disabled]="!armourType('NA')" (ngModelChange)="!setStats(MOVEMENT.NA,0,MOVEMENT.BNA,0,MOVEMENT.RNA,0)" type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.NA" min="0" max="10" ></ion-col>
 				  	<ion-col><input   [disabled]="!armourType('NA')" (ngModelChange)="!setStats(MOVEMENT.NA,0,MOVEMENT.BNA,0,MOVEMENT.RNA,0)" type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.BNA" min="0"  max="20" ></ion-col>
 				    <ion-col><input   [disabled]="!armourType('NA')" (ngModelChange)="!setStats(MOVEMENT.NA,0,MOVEMENT.BNA,0,MOVEMENT.RNA,0)" type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.RNA" min="0"  max="20" ></ion-col>
 					<ion-col>{{result[0].ability5 - result[0].reduction + result[0].bonusMix + result[0].stat}} MM </ion-col>
-				  	<ion-col><button class="btn btn-default btn-xs" (click)="!setEquipedArmour('NA')">select</button></ion-col>
+				  	<ion-col><button ion-button color="dark" class="btn btn-default btn-xs" (click)="!setEquipedArmour('NA')">select</button></ion-col>
 				  </ion-row>
 				   <ion-row justify-content-around>
 				  	<ion-col>Leather</ion-col>
@@ -83,7 +85,7 @@
 				  	<ion-col><input   [disabled]="!armourType('LE')" (ngModelChange)="!setStats(MOVEMENT.LE,0,MOVEMENT.BLE,0,MOVEMENT.RLE,1)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.BLE" min="0"  max="20"></ion-col>
 				  	<ion-col><input   [disabled]="!armourType('LE')" (ngModelChange)="!setStats(MOVEMENT.LE,0,MOVEMENT.BLE,0,MOVEMENT.RLE,1)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.RLE" min="0"  max="20"></ion-col>
 					<ion-col>{{result[1].ability5 - result[1].reduction + result[1].bonusMix + result[1].stat -15}} MM </ion-col>
-				  	<ion-col><button class="btn btn-default btn-xs" (click)="!setEquipedArmour('LE')">select</button></ion-col>
+				  	<ion-col><button ion-button color="dark" class="btn btn-default btn-xs" (click)="!setEquipedArmour('LE')">select</button></ion-col>
 				  </ion-row>
 				   <ion-row justify-content-around>
 				  	<ion-col>Hardened Leather</ion-col>
@@ -91,7 +93,7 @@
 				  	<ion-col><input   [disabled]="!armourType('HL')" (ngModelChange)="!setStats(MOVEMENT.HL,0,MOVEMENT.BHL,0,MOVEMENT.RHL,2)"   type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.BHL" min="0"  max="20"></ion-col>
 				  	<ion-col><input   [disabled]="!armourType('HL')" (ngModelChange)="!setStats(MOVEMENT.HL,0,MOVEMENT.BHL,0,MOVEMENT.RHL,2)"   type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.RHL" min="0"  max="20"></ion-col>
 					  <ion-col>{{result[2].ability5 - result[2].reduction + result[2].bonusMix + result[2].stat - 30}} MM </ion-col>
-				  	<ion-col><button class="btn btn-default btn-xs" (click)="!setEquipedArmour('HL')">select</button></ion-col>
+				  	<ion-col><button ion-button color="dark"  class="btn btn-default btn-xs" (click)="!setEquipedArmour('HL')">select</button></ion-col>
 				  </ion-row>
 				   <ion-row justify-content-around>
 				  	<ion-col>Chain Mail</ion-col>
@@ -99,7 +101,7 @@
 				  	<ion-col><input   [disabled]="!armourType('CM')" (ngModelChange)="!setStats(MOVEMENT.CM,0,MOVEMENT.BCM,0,MOVEMENT.RCM,3)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.BCM" min="0"  max="20"></ion-col>
 				  	<ion-col><input   [disabled]="!armourType('CM')" (ngModelChange)="!setStats(MOVEMENT.CM,0,MOVEMENT.BCM,0,MOVEMENT.RCM,3)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.RCM" min="0"  max="20"></ion-col>
 					  <ion-col>{{result[3].ability5 - result[3].reduction + result[3].bonusMix + result[3].stat -45}} MM </ion-col>
-				  	<ion-col><button class="btn btn-default btn-xs" (click)="!setEquipedArmour('CM')">select</button></ion-col>
+				  	<ion-col><button ion-button color="dark" class="btn btn-default btn-xs" (click)="!setEquipedArmour('CM')">select</button></ion-col>
 				  </ion-row>
 				   <ion-row justify-content-around>
 				  	<ion-col>Plate</ion-col>
@@ -107,9 +109,9 @@
 				  	<ion-col><input   [disabled]="!armourType('PL')" (ngModelChange)="!setStats(MOVEMENT.PL,0,MOVEMENT.BPL,0,MOVEMENT.RPL,4)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.BPL" min="0"  max="20"></ion-col>
 				  	<ion-col><input   [disabled]="!armourType('PL')" (ngModelChange)="!setStats(MOVEMENT.PL,0,MOVEMENT.BPL,0,MOVEMENT.RPL,4)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.RPL" min="0"  max="20"></ion-col>
 					  <ion-col>{{result[4].ability5 - result[4].reduction + result[4].bonusMix + result[4].stat -60}} MM </ion-col>
-				  	<ion-col><button class="btn btn-default btn-xs"	 (click)="!setEquipedArmour('PL')">select</button></ion-col>
+				  	<ion-col><button ion-button color="dark" class="btn btn-default btn-xs"	 (click)="!setEquipedArmour('PL')">select</button></ion-col>
 				  </ion-row>
-			
+
 			</ion-grid>
 		</div>
 		  <div class="col col-md-2 col-md-offset-3 pull-rigth">
@@ -120,8 +122,8 @@
 			    <ion-col ><input   class = "col-md-12" type="number" step="5" (ngModelChange)="!updateResutls(STATS.INT,'INT')" [ngModelOptions]="{standalone: true}" [(ngModel)]="STATS.INT" min="0"  max="20"></ion-col>
 			  </ion-row>
 			  <ion-row >
-			    <ion-col>Sion-rowength</ion-col>
-			    <ion-col><input   class = "col-md-12" type="number" step="5" (ngModelChange)="!updateResutls(STATS.Sion-row,'Sion-row')" [ngModelOptions]="{standalone: true}" [(ngModel)]="STATS.Sion-row" min="0"  max="20"></ion-col>
+			    <ion-col>Strength</ion-col>
+			    <ion-col><input   class = "col-md-12" type="number" step="5" (ngModelChange)="!updateResutls(STATS.STR,'STR')" [ngModelOptions]="{standalone: true}" [(ngModel)]="STATS.STR" min="0"  max="20"></ion-col>
 			  </ion-row>
 			  <ion-row >
 			    <ion-col>Agility</ion-col>
@@ -157,7 +159,7 @@
 					  	<ion-col>Reductions</ion-col>
 					  	<ion-col>TOTAL</ion-col>
 					</ion-row >
-					
+
 						 <ion-row justify-content-around>
 							<ion-col>Edge</ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.ED,WEAPONS.ED2,WEAPONS.BMED,WEAPONS.BIED,WEAPONS.RED,7)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.ED" min="0" max="50"></ion-col>
@@ -212,7 +214,7 @@
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PO,WEAPONS.PO2,WEAPONS.BMPO,WEAPONS.BIPO,WEAPONS.RPO,12)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.RPO" min="0"  max="20"></ion-col>
 						  	<ion-col>{{result[12].ability5 + result[12].ability2 + result[12].bonusItem -  result[12].reduction + result[12].bonusMix + result[12].stat}} BO </ion-col>
 						</ion-row>
-					
+
 				   </ion-grid>
 			</div>
 			<div class=" pull-left col-md-offset-1">
@@ -227,7 +229,7 @@
 					  	<ion-col>Reductions</ion-col>
 					  	<ion-col>TOTAL</ion-col>
 					</ion-row >
-					
+
 						 <ion-row justify-content-around>
 							<ion-col>Climbing</ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(GENERALS.CL,GENERALS.CL2,GENERALS.BMCL,GENERALS.BICL,GENERALS.RCL,13)" [ngModelOptions]="{standalone: true}" [(ngModel)]="GENERALS.CL" min="0" max="50"></ion-col>
@@ -264,13 +266,13 @@
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(GENERALS.TR,GENERALS.TR2,GENERALS.BMTR,GENERALS.BITR,GENERALS.RTR,16)" [ngModelOptions]="{standalone: true}" [(ngModel)]="GENERALS.RTR" min="0"  max="20"></ion-col>
 						  	<ion-col>{{result[16].ability5 + result[16].ability2 + result[16].bonusItem - result[16].reduction + result[16].bonusMix + result[16].stat}} ME </ion-col>
 						</ion-row>
-					
+
 			   </ion-grid>
 		 </div>
 	</div>
   <!--ROW CONTAINS SUBTREFUGE AND MAGIC-->
 	<div class="row mt-2 form-group">
-	 <div class="pull-left">  
+	 <div class="pull-left">
 	   <h4>SUBTREFUGE</h4>
 	   <ion-grid   >
 	   		<ion-row justify-content-around>
@@ -282,7 +284,7 @@
 			  	<ion-col>Reductions</ion-col>
 			  	<ion-col>TOTAL</ion-col>
 			</ion-row >
-			
+
 				 <ion-row justify-content-around>
 					<ion-col>Ambush</ion-col>
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.AM,SUBTREFUGE.AM2,SUBTREFUGE.BMAM,SUBTREFUGE.BIAM,SUBTREFUGE.RAM,17)"  [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.AM" min="0" max="50"></ion-col>
@@ -299,10 +301,10 @@
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.SH,SUBTREFUGE.SH2,SUBTREFUGE.BMSH,SUBTREFUGE.BISH,SUBTREFUGE.RSH,18)" [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.BMSH" min="0"  max="90"></ion-col>
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.SH,SUBTREFUGE.SH2,SUBTREFUGE.BMSH,SUBTREFUGE.BISH,SUBTREFUGE.RSH,18)" [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.BISH" min="0"  max="90"></ion-col>
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.SH,SUBTREFUGE.SH2,SUBTREFUGE.BMSH,SUBTREFUGE.BISH,SUBTREFUGE.RSH,18)" [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.RSH" min="0"  max="90"></ion-col>
-				  	<ion-col>{{result[18].ability5 + result[18].ability2 + result[18].bonusItem - result[18].reduction + result[18].bonusMix + result[18].stat}} PE </ion-col> 
+				  	<ion-col>{{result[18].ability5 + result[18].ability2 + result[18].bonusItem - result[18].reduction + result[18].bonusMix + result[18].stat}} PE </ion-col>
 				</ion-row>
 				 <ion-row justify-content-around>
-					<ion-col>Lockpicking</ion-col>
+					<ion-col class ="pl-5">Lockpick</ion-col>
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.LP,SUBTREFUGE.LP2,SUBTREFUGE.BMLP,SUBTREFUGE.BILP,SUBTREFUGE.RLP,19)" [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.LP" min="0" max="50"></ion-col>
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.LP,SUBTREFUGE.LP2,SUBTREFUGE.BMLP,SUBTREFUGE.BILP,SUBTREFUGE.RLP,19)" [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.LP2" min="0" max="10"></ion-col>
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.LP,SUBTREFUGE.LP2,SUBTREFUGE.BMLP,SUBTREFUGE.BILP,SUBTREFUGE.RLP,19)" [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.BMLP" min="0"  max="90"></ion-col>
@@ -311,7 +313,7 @@
 				   	<ion-col>{{result[19].ability5 + result[19].ability2 + result[19].bonusItem - result[19].reduction + result[19].bonusMix + result[19].stat}} ME </ion-col>
 				</ion-row>
 				 <ion-row justify-content-around>
-					<ion-col>Disarm ion-rowaps</ion-col>
+					<ion-col>Disarm Traps</ion-col>
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.DT,SUBTREFUGE.DT2,SUBTREFUGE.BMDT,SUBTREFUGE.BIDT,SUBTREFUGE.RDT,20)" [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.DT" min="0" max="50"></ion-col>
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.DT,SUBTREFUGE.DT2,SUBTREFUGE.BMDT,SUBTREFUGE.BIDT,SUBTREFUGE.RDT,20)" [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.DT2" min="0" max="10"></ion-col>
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.DT,SUBTREFUGE.DT2,SUBTREFUGE.BMDT,SUBTREFUGE.BIDT,SUBTREFUGE.RDT,20)" [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.BMDT" min="0"  max="90"></ion-col>
@@ -319,7 +321,7 @@
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(SUBTREFUGE.DT,SUBTREFUGE.DT2,SUBTREFUGE.BMDT,SUBTREFUGE.BIDT,SUBTREFUGE.RDT,20)" [ngModelOptions]="{standalone: true}" [(ngModel)]="SUBTREFUGE.RDT" min="0"  max="90"></ion-col>
 				  	<ion-col>{{result[20].ability5 + result[20].ability2 + result[20].bonusItem - result[20].reduction + result[20].bonusMix + result[20].stat}} ME </ion-col>
 				</ion-row>
-			
+
 	   </ion-grid>
 	   </div>
 	   <div class="col-md-offset-1 pull-left">
@@ -334,7 +336,7 @@
 			  	<ion-col>Reductions</ion-col>
 			  	<ion-col>TOTAL</ion-col>
 			</ion-row >
-			
+
 				 <ion-row justify-content-around>
 					<ion-col>Runes</ion-col>
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(MAGIC.RN,MAGIC.RN2,MAGIC.BMRN,MAGIC.BIRN,MAGIC.RRN,21)" [ngModelOptions]="{standalone: true}" [(ngModel)]="MAGIC.RN" min="0" max="50"></ion-col>
@@ -363,13 +365,13 @@
 				  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(MAGIC.DS,MAGIC.DS2,MAGIC.BMDS,MAGIC.BIDS,MAGIC.RDS,23)" [ngModelOptions]="{standalone: true}" [(ngModel)]="MAGIC.RDS" min="0"  max="20"></ion-col>
 				  	<ion-col>{{result[23].ability5 + result[23].ability2 + result[23].bonusItem - result[23].reduction + result[23].bonusMix + result[23].stat}} BO </ion-col>
 				</ion-row>
-			
+
 	   </ion-grid>
 	  </div>
 	</div>
-  <!--ROW CONTAINS DEFENSES, DICES AND SAVE-->
+  <!--ROW CONTAINS DEFENSES-->
 	<div class="row  mt-2 form-group">
-			<div class="col-md-4 pull-left pl-0 "> 
+			<div class="col-md-4 pull-left pl-0 ">
 				<h4>Defensive Bonus</h4>
 					<ion-grid>
 					<ion-row justify-content-around>
@@ -378,51 +380,54 @@
 							<ion-col>Reductions</ion-col>
 							<ion-col>TOTAL</ion-col>
 					</ion-row >
-					
+
 						 <ion-row justify-content-around>
 							<ion-col><input    type="number" step="1" (ngModelChange)="!setStats(DEFENSE.DB,0,DEFENSE.BDB,0,DEFENSE.RDB,24)"  [ngModelOptions]="{standalone: true}" [(ngModel)]="DEFENSE.DB" min="0"  max="20"></ion-col>
 							<ion-col><input    type="number" step="1" (ngModelChange)="!setStats(DEFENSE.DB,0,DEFENSE.BDB,0,DEFENSE.RDB,24)"  [ngModelOptions]="{standalone: true}" [(ngModel)]="DEFENSE.BDB" min="0" max="50"></ion-col>
 							<ion-col><input    type="number" step="1" (ngModelChange)="!setStats(DEFENSE.DB,0,DEFENSE.BDB,0,DEFENSE.RDB,24)"  [ngModelOptions]="{standalone: true}" [(ngModel)]="DEFENSE.RDB" min="0"  max="20"></ion-col>
 							<ion-col>{{result[24].ability5 - result[24].reduction + result[24].bonusMix + result[24].stat}} DB </ion-col>
 						</ion-row>
-					
+
 					</ion-grid>
-			</div> 
-			<div class="btn-group col-md-3 mr-4 mt-5">
+			</div>
+  </div>
+  <!-- ROW CONTAINS DICE AND SAVE-->
+  <div class="row  mt-2 form-group">
+			<div class="btn-group col-md- mr-4 mt-5">
           <div class="pull-left col-md-4 mr-2">
-						<button class="btn btn-default btn-md" (click)="geion-coliceRoll(0,100)">D100</button>
+						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(0,100)">D100</button>
 					<div class="pull-rigth col-md-1">{{rolls[0].value}}</div>
 					</div>
 					<div class="pull-left col-md-4 ml-2">
-						<button class="btn btn-default btn-md" (click)="geion-coliceRoll(1,20)">D20</button>
+						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(1,20)">D20</button>
 						<div class="pull-rigth col-md-1">{{rolls[1].value}}</div>
 					</div>
 					<div class="pull-left col-md-4 ml-2">
-						<button class="btn btn-default btn-md" (click)="geion-coliceRoll(2,12)">D12</button>
+						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(2,12)">D12</button>
 						<div class="pull-rigth col-md-1">{{rolls[2].value}}</div>
 					</div>
       </div>
-      <div class="btn-group col-md-3 mt-5 ">
+      <div class="btn-group col-md-12 mt-5 ">
 					<div class="pull-left col-md-4 mr-2">
-						<button class="btn btn-default btn-md" (click)="geion-coliceRoll(3,10)" >D10</button>
+						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(3,10)" >D10</button>
 						<div class="pull-rigth col-md-1">{{rolls[3].value}}</div>
 					</div>
 					<div class="pull-left col-md-4 ml-3">
-						<button class="btn btn-default btn-md" (click)="geion-coliceRoll(4,8)">D8</button>
+						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(4,8)">D8</button>
 						<div class="pull-rigth col-md-1">{{rolls[4].value}}</div>
 					</div>
 					<div class="pull-left col-md-4 ml-4">
-						<button class="btn btn-default btn-md" (click)="geion-coliceRoll(5,4)">D4</button>
+						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(5,4)">D4</button>
 						<div class="pull-rigth col-md-1">{{rolls[5].value}}</div>
 					</div>
       </div>
-      <div class="btn-group col-md-8 mt-5 ">
+      <div class="btn-group col-md-12 mt-5 ">
 					<div class="pull-left col-md-3">
-						<button class="pull-left btn btn-default btn-md" (click)="geion-coliceRoll(6,2)">Coin</button>
+						<button ion-button color="dark" class="pull-left btn btn-default btn-md" (click)="getDiceRoll(6,2)">Coin</button>
 						<p class="pull-left pl-2 mt-2 ">{{coin[rolls[6].value].state}}</p>
 					</div>
-			  <div class="col-md-2 offset-2">
-					<button class="btn btn-danger " (click)="saveCharacter()">SAVE CHARACTER</button>
+			  <div class="col-md-2 offset-2 mt-5">
+					<button ion-button color="danger" class="btn btn-danger " (click)="saveCharacter()">SAVE CHARACTER</button>
 			  </div>
 			</div>
 		</div>

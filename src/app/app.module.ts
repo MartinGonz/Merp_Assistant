@@ -34,6 +34,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { UserProvider } from '../providers/user/user';
+import {InventoryPage} from "../pages/inventory/inventory";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { UserProvider } from '../providers/user/user';
     CharactersPage,
     CreateGamePage,
     InvitesPage,
-    CritsAndDmgPage
+    CritsAndDmgPage,
+    InventoryPage
   ],
   imports: [
     BrowserModule,
@@ -70,7 +72,8 @@ import { UserProvider } from '../providers/user/user';
     NotesPage,
     CreateGamePage,
     InvitesPage,
-    CritsAndDmgPage
+    CritsAndDmgPage,
+    InventoryPage
   ],
   providers: [
     AF,
