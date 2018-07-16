@@ -10,22 +10,26 @@
     <button clear color="dark" (click)="goBack()" ion-button side="left" col-1 menuClose>
       <ion-icon name="arrow-back"> </ion-icon>
     </button>
-    <ion-title>inventory</ion-title>
+    <ion-title>Inventory</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-<!--HELMET AND ACCESORIES-->
-  <ion-row>
-    <ion-card  col-3 col-md >
-        <ion-card-title  style="font-size: 4vw">
-          Accesories
-        </ion-card-title>
-    </ion-card>
+  <ion-grid>
+  <ion-row justify-content-center>
+    <button ion-button color="dark" (click)="createItem()"> Create Item</button>
+  </ion-row>
+<!--HELMET AND ACCESSORIES-->
+  <ion-row >
+    <!--<ion-card  col-3 col-md >-->
+        <!--<ion-card-title  style="font-size: 4vw">-->
+          <!--Accessories-->
+        <!--</ion-card-title>-->
+    <!--</ion-card>-->
 
-    <ion-card col-3 col-md >
+    <ion-card (click)="openEquipHelmet()" offset-4 col-3 col-md >
       <ion-card-title  style="font-size: 4vw" class="mt-2">
          Helmet
       </ion-card-title>
@@ -33,18 +37,18 @@
   </ion-row>
   <!--WEAPONS/SHIELD AND CHEST ARMOUR-->
   <ion-row>
-    <ion-card  col-3 col-md >
+    <ion-card (click)="openEquipMainHand()" col-3 col-md >
       <ion-card-title  style="font-size: 4vw">
         Main
       </ion-card-title>
     </ion-card>
 
-    <ion-card col-3 col-md >
+    <ion-card (click)="openEquipChest()" col-3 col-md >
       <ion-card-title  style="font-size: 4vw" class="mt-2">
         Chest
       </ion-card-title>
     </ion-card>
-    <ion-card col-3 col-md >
+    <ion-card col-3 col-md (click)="openEquipSecondaryHand()">
       <ion-card-title  style="font-size: 4vw" class="mt-2">
         Secondary
       </ion-card-title>
@@ -52,22 +56,40 @@
   </ion-row>
   <!--WEAPONS/SHIELD AND CHEST ARMOUR-->
   <ion-row>
-    <ion-card  col-3 col-md >
+    <ion-card  col-3 col-md (click)="openEquipGloves()">
       <ion-card-title  style="font-size: 4vw">
         Gloves
       </ion-card-title>
     </ion-card>
 
-    <ion-card col-3 col-md >
+    <ion-card col-3 col-md  (click)="openEquipPants()">
       <ion-card-title  style="font-size: 4vw" class="mt-2">
         Pants
       </ion-card-title>
     </ion-card>
-    <ion-card col-3 col-md >
+    <ion-card col-3 col-md (click)="openEquipBoots()">
       <ion-card-title  style="font-size: 4vw" class="mt-2">
         Boots
       </ion-card-title>
     </ion-card>
   </ion-row>
+  <ion-row  justify-content-start align-items-center>
+    <ion-list-header>Bag</ion-list-header>
+    <ion-list col-md-12 *ngFor="let item of bag">
+        <ion-item  align-items-center>
+          <ion-col width-70>
+            {{item.name}}
+          </ion-col>
+          <ion-col width-15>
+            <button  align-items-center (click)="openDescription(item)"  ion-button color="dark">Details</button>
+          </ion-col>
+          <ion-col width-15>
+            <button align-items-center (click)="confirmDelete(item)" ion-button color="danger">DELETE</button>
+          </ion-col>
+
+        </ion-item>
+    </ion-list>
+  </ion-row>
+  </ion-grid>
 
 </ion-content>

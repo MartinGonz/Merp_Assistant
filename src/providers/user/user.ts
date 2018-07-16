@@ -81,6 +81,7 @@ export class UserProvider {
       characterToLoad.defense = character.defense
       characterToLoad.armourType = character.armourType
       characterToLoad.name = character.name
+     characterToLoad.inventory = character.inventory
   })
 
     return characterToLoad;

@@ -165,7 +165,7 @@
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.ED,WEAPONS.ED2,WEAPONS.BMED,WEAPONS.BIED,WEAPONS.RED,7)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.ED" min="0" max="50"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.ED,WEAPONS.ED2,WEAPONS.BMED,WEAPONS.BIED,WEAPONS.RED,7)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.ED2" min="0" max="10"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.ED,WEAPONS.ED2,WEAPONS.BMED,WEAPONS.BIED,WEAPONS.RED,7)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BMED" min="0"  max="20"></ion-col>
-						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.ED,WEAPONS.ED2,WEAPONS.BMED,WEAPONS.BIED,WEAPONS.RED,7)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BIED" min="0"  max="20"></ion-col>
+						  	<ion-col><input   type="number" step="1"  [disabled]="true" [ngModelOptions]="{standalone: true}"  [(ngModel)]="WEAPONS.BIED" min="0"  max="20"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.ED,WEAPONS.ED2,WEAPONS.BMED,WEAPONS.BIED,WEAPONS.RED,7)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.RED" min="0"  max="20"></ion-col>
 							  <ion-col>{{result[7].ability5 + result[7].ability2 + result[7].bonusItem -  result[7].reduction + result[7].bonusMix + result[7].stat}} BO </ion-col>
 						</ion-row>
@@ -174,7 +174,7 @@
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.BL,WEAPONS.BL2,WEAPONS.BMBL,WEAPONS.BIBL,WEAPONS.RBL,8)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BL" min="0" max="50"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.BL,WEAPONS.BL2,WEAPONS.BMBL,WEAPONS.BIBL,WEAPONS.RBL,8)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BL2" min="0" max="10"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.BL,WEAPONS.BL2,WEAPONS.BMBL,WEAPONS.BIBL,WEAPONS.RBL,8)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BMBL" min="0"  max="20"></ion-col>
-						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.BL,WEAPONS.BL2,WEAPONS.BMBL,WEAPONS.BIBL,WEAPONS.RBL,8)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BIBL" min="0"  max="20"></ion-col>
+						  	<ion-col><input   type="number" step="1" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BIBL" min="0"  max="20"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.BL,WEAPONS.BL2,WEAPONS.BMBL,WEAPONS.BIBL,WEAPONS.RBL,8)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.RBL" min="0"  max="20"></ion-col>
 						  	<ion-col>{{result[8].ability5 + result[8].ability2 + result[8].bonusItem -  result[8].reduction + result[8].bonusMix + result[8].stat}} BO </ion-col>
 						</ion-row>
@@ -183,7 +183,7 @@
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.TH,WEAPONS.TH2,WEAPONS.BMTH,WEAPONS.BITH,WEAPONS.RTH,9)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.TH" min="0" max="50"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.TH,WEAPONS.TH2,WEAPONS.BMTH,WEAPONS.BITH,WEAPONS.RTH,9)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.TH2" min="0" max="10"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.TH,WEAPONS.TH2,WEAPONS.BMTH,WEAPONS.BITH,WEAPONS.RTH,9)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BMTH" min="0"  max="20"></ion-col>
-						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.TH,WEAPONS.TH2,WEAPONS.BMTH,WEAPONS.BITH,WEAPONS.RTH,9)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BITH" min="0"  max="20"></ion-col>
+						  	<ion-col><input   type="number" step="1" [disabled]="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BITH" min="0"  max="20"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.TH,WEAPONS.TH2,WEAPONS.BMTH,WEAPONS.BITH,WEAPONS.RTH,9)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.RTH" min="0"  max="20"></ion-col>
 						  	<ion-col>{{result[9].ability5 + result[9].ability2 + result[9].bonusItem -  result[9].reduction + result[9].bonusMix + result[9].stat}} BO </ion-col>
 						</ion-row>
@@ -192,7 +192,7 @@
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.THR,WEAPONS.THR2,WEAPONS.BMTHR,WEAPONS.BITHR,WEAPONS.RTHR,10)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.THR" min="0" max="50"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.THR,WEAPONS.THR2,WEAPONS.BMTHR,WEAPONS.BITHR,WEAPONS.RTHR,10)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.THR2" min="0" max="10"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.THR,WEAPONS.THR2,WEAPONS.BMTHR,WEAPONS.BITHR,WEAPONS.RTHR,10)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BMTHR" min="0"  max="20"></ion-col>
-						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.THR,WEAPONS.THR2,WEAPONS.BMTHR,WEAPONS.BITHR,WEAPONS.RTHR,10)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BITHR" min="0"  max="20"></ion-col>
+						  	<ion-col><input   type="number" step="1" [disabled]="true" [ngModelOptions]="{standalone: true}"  [(ngModel)]="WEAPONS.BITHR" min="0"  max="20"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.THR,WEAPONS.THR2,WEAPONS.BMTHR,WEAPONS.BITHR,WEAPONS.RTHR,10)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.RTHR" min="0"  max="20"></ion-col>
 						  	<ion-col>{{result[10].ability5 + result[10].ability2 + result[10].bonusItem -  result[10].reduction + result[10].bonusMix + result[10].stat}} BO </ion-col>
 						</ion-row>
@@ -201,7 +201,7 @@
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PRO,WEAPONS.PRO2,WEAPONS.BMPRO,WEAPONS.BIPRO,WEAPONS.RPRO,11)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.PRO" min="0" max="50"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PRO,WEAPONS.PRO2,WEAPONS.BMPRO,WEAPONS.BIPRO,WEAPONS.RPRO,11)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.PRO2" min="0" max="10"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PRO,WEAPONS.PRO2,WEAPONS.BMPRO,WEAPONS.BIPRO,WEAPONS.RPRO,11)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BMPRO" min="0"  max="20"></ion-col>
-						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PRO,WEAPONS.PRO2,WEAPONS.BMPRO,WEAPONS.BIPRO,WEAPONS.RPRO,11)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BIPRO" min="0"  max="20"></ion-col>
+						  	<ion-col><input   type="number" step="1" [disabled]="true" [ngModelOptions]="{standalone: true}"  [(ngModel)]="WEAPONS.BIPRO" min="0"  max="20"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PRO,WEAPONS.PRO2,WEAPONS.BMPRO,WEAPONS.BIPRO,WEAPONS.RPRO,11)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.RPRO" min="0"  max="20"></ion-col>
 						  	<ion-col>{{result[11].ability5 + result[11].ability2 + result[11].bonusItem -  result[11].reduction + result[11].bonusMix + result[11].stat}} BO </ion-col>
 						</ion-row>
@@ -210,7 +210,7 @@
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PO,WEAPONS.PO2,WEAPONS.BMPO,WEAPONS.BIPO,WEAPONS.RPO,12)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.PO" min="0" max="50"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PO,WEAPONS.PO2,WEAPONS.BMPO,WEAPONS.BIPO,WEAPONS.RPO,12)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.PO2" min="0" max="10"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PO,WEAPONS.PO2,WEAPONS.BMPO,WEAPONS.BIPO,WEAPONS.RPO,12)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BMPO" min="0"  max="20"></ion-col>
-						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PO,WEAPONS.PO2,WEAPONS.BMPO,WEAPONS.BIPO,WEAPONS.RPO,12)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.BIPO" min="0"  max="20"></ion-col>
+						  	<ion-col><input   type="number" step="1" [disabled]="true"[ngModelOptions]="{standalone: true}"  [(ngModel)]="WEAPONS.BIPO" min="0"  max="20"></ion-col>
 						  	<ion-col><input   type="number" step="1" (ngModelChange)="!setStats(WEAPONS.PO,WEAPONS.PO2,WEAPONS.BMPO,WEAPONS.BIPO,WEAPONS.RPO,12)" [ngModelOptions]="{standalone: true}" [(ngModel)]="WEAPONS.RPO" min="0"  max="20"></ion-col>
 						  	<ion-col>{{result[12].ability5 + result[12].ability2 + result[12].bonusItem -  result[12].reduction + result[12].bonusMix + result[12].stat}} BO </ion-col>
 						</ion-row>

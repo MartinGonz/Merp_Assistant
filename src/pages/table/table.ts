@@ -33,7 +33,7 @@ export class TablePage {
         this.currentSubscriber.unsubscribe()
       }
       this.af.selectedCharacter=character
-      let modal = this.modalCtrl.create(CharacterSheet)
+      let modal = this.modalCtrl.create(CharacterSheet,{owner:uid})
       modal.present();
       this.currentSubscriber = this.af.createCharacterSubscriber(character.$key,uid)
     }
@@ -47,7 +47,7 @@ export class TablePage {
     }
     return  result
   }
-  
+
   gameIsLoaded(){
     return (this.af.currentGame!=null&&this.af.currentGame!=undefined)
   }

@@ -181,7 +181,7 @@ export class AF {
 					UMO:0,UMO2:0,BMUMO:0,BIUMO:0,RUMO:0,
 					DS:0,DS2:0,BMDS:0,BIDS:0,RDS:0};
     let DEFENSE = { DB:0,BDB:0,RDB:0};
-    let INVENTORY={ ITEM_SET:{HELMET:null,ACCESORIES:[],MAIN:null,CHEST:null,SECONDARY:null,GLOVES:null,PANTS:null,BOOTS:null},
+    let INVENTORY={ ITEM_SET:{HELMET:null,ACCESSORIES:[],MAIN:null,CHEST:null,SECONDARY:null,GLOVES:null,PANTS:null,BOOTS:null},
                     BAG:[]};
    return this.saveCharacter("",STATS,PERCEPTION,HEALTH,MOVEMENT,WEAPONS,GENERALS,SUBTREFUGE,MAGIC,DEFENSE,"","", INVENTORY)
 	}
@@ -274,7 +274,8 @@ export class AF {
                   subtrefuge: element.subtrefuge,
                   magic: element.magic,
                   defense: element.defense,
-                  name: element.name
+                  name: element.name,
+                  inventory:element.inventory
             }
         })
   }
@@ -284,5 +285,13 @@ export class AF {
     return this.saveCharacter("",char.stats,char.perception,char.health,char.movement,char.weapons,char.generals,char.subtrefuge,char.magic,char.defense,'',char.armourType,char.inventory)
   }
 
+  getInventory(){
+    return this.selectedCharacter.inventory;
+  }
+  saveInventory(uid:string,inventory:any){
+    const inventoryFromDb =   this.db.object('users/'+uid+'characters/'+this.selectedCharacter.key+'inventory/')
+    inventoryFromDb.update(inventory);
+    console.log(inventory);
+  }
 
 }

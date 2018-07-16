@@ -1,40 +1,38 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import {BrowserModule} from '@angular/platform-browser';
+import {ErrorHandler, NgModule} from '@angular/core';
+import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
-import { MyApp } from './app.component';
+import {MyApp} from './app.component';
 
-import { HomePage } from '../pages/home/home';
-import { CharacterSheet} from '../pages/character-sheet/character-sheet';
-import { LoginPage } from '../pages/login/login';
-import { LobbyPage} from '../pages/lobby/lobby'
-import { CharactersPage} from '../pages/characters/characters';
-import { PlayingTabsPage } from '../pages/playing-tabs/playing-tabs';
-import { PlayingTabsPageModule } from '../pages/playing-tabs/playing-tabs.module';
-import { TablePage } from '../pages/table/table';
-import { ChatPage} from '../pages/chat/chat';
-import { NotesPage } from '../pages/notes/notes';
-import { CreateGamePage} from '../pages/create-game/create-game';
-import { CurrentGamesPageModule} from '../pages/current-games/current-games.module';
-import { InvitesPage} from '../pages/invites/invites';
-import { CritsAndDmgPage} from '../pages/crits-and-dmg/crits-and-dmg'
+import {HomePage} from '../pages/home/home';
+import {CharacterSheet} from '../pages/character-sheet/character-sheet';
+import {LoginPage} from '../pages/login/login';
+import {LobbyPage} from '../pages/lobby/lobby'
+import {CharactersPage} from '../pages/characters/characters';
+import {PlayingTabsPage} from '../pages/playing-tabs/playing-tabs';
+import {PlayingTabsPageModule} from '../pages/playing-tabs/playing-tabs.module';
+import {TablePage} from '../pages/table/table';
+import {ChatPage} from '../pages/chat/chat';
+import {NotesPage} from '../pages/notes/notes';
+import {CreateGamePage} from '../pages/create-game/create-game';
+import {CurrentGamesPageModule} from '../pages/current-games/current-games.module';
+import {InvitesPage} from '../pages/invites/invites';
+import {CritsAndDmgPage} from '../pages/crits-and-dmg/crits-and-dmg'
+import {InventoryPage} from "../pages/inventory/inventory";
+import {ItemCreationPage} from "../pages/item-creation/item-creation";
 
 
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {AF} from './../providers/af'
-
-
-
 // angulare fire 2
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { environment } from '../environments/environment';
-import { UserProvider } from '../providers/user/user';
-import {InventoryPage} from "../pages/inventory/inventory";
+import {AngularFireModule} from 'angularfire2';
+import {AngularFireDatabaseModule} from 'angularfire2/database';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+import {environment} from '../environments/environment';
+import {UserProvider} from '../providers/user/user';
+import {EquipItemPage} from "../pages/equip-item/equip-item";
 
 @NgModule({
   declarations: [
@@ -47,7 +45,9 @@ import {InventoryPage} from "../pages/inventory/inventory";
     CreateGamePage,
     InvitesPage,
     CritsAndDmgPage,
-    InventoryPage
+    InventoryPage,
+    ItemCreationPage,
+    EquipItemPage
   ],
   imports: [
     BrowserModule,
@@ -73,7 +73,9 @@ import {InventoryPage} from "../pages/inventory/inventory";
     CreateGamePage,
     InvitesPage,
     CritsAndDmgPage,
-    InventoryPage
+    InventoryPage,
+    ItemCreationPage,
+    EquipItemPage
   ],
   providers: [
     AF,

@@ -12,25 +12,47 @@ import {EQUIPMENT, InventoryPage, ITEM} from "../inventory/inventory";
 export class CharacterSheet  {
 
   constructor( public modalCtrl:ModalController,public afService:AF,public navCtl:NavController, public menuCtl: MenuController) {
-
 		var character = this.afService.selectedCharacter
-		if(character==null){
+
+    if(character==null){
 			this.resetSheet()
 			this.result = this.getResult()
 		}else{
 			this.loadCharacter(character)
 			this.result = this.getResult()
 		}
+    if(this.INVENTORY.bag==undefined) {
+		  this.INVENTORY.bag=new Array();
+      this.INVENTORY.bag.push({
+        type: "Base",
+        subType:"Base",
+        name: "Starter Equipment",
+        skillBonus: 0,
+        defenseBonus: 0,
+        twoHanded: false,
+        description:"Generic equipment of your choosing, no bonus or anything special"
+      })
+    }
+		if(this.INVENTORY.itemSet==undefined){
+		  this.INVENTORY.itemSet={helmet:0,
+        gloves:0,
+        pants:0,
+        chest:0,
+        boots:0,
+        main:0,
+        secondary:0,
+        accessories:0}
+    }
 	}
 
 public INVENTORY:{itemSet:EQUIPMENT,
-                  bag:any[]};
+                  bag:ITEM[]};
 
 public CHARACTER_KEY:string ="";
 
 public NAME:string ="";
 
-public SELECTED_CHAR;
+public owner :string;
 
 public STATS = {INT:0,AGI:0,PRE:0,CON:0,I:0,STR:0};
 
@@ -84,92 +106,225 @@ public result ;
 public equipedArmour = 'NA';
 
 public openInventory(){
-  let modal = this.modalCtrl.create(InventoryPage);
+  let modal = this.modalCtrl.create(InventoryPage,{armourType:this.equipedArmour});
   modal.onDidDismiss(inventory=>{
-    this.INVENTORY= inventory;
-    this.loadEquipmentBonus();
+    if(null!=inventory){
+      this.INVENTORY= inventory;
+      console.log(this.INVENTORY)
+      this.loadEquipmentBonus(this.getItemsfromSet());
+      this.result = this.getResult();
+      this.saveCharacter();
+    }
   });
   modal.present();
 
 }
-private loadEquipmentBonus(){
-  this.sortSetBonus(this.INVENTORY.itemSet.helmet);
-  this.sortSetBonus(this.INVENTORY.itemSet.chest);
-  this.sortSetBonus(this.INVENTORY.itemSet.gloves);
-  this.sortSetBonus(this.INVENTORY.itemSet.main);
-  this.sortSetBonus(this.INVENTORY.itemSet.secondary);
-  this.sortSetBonus(this.INVENTORY.itemSet.helmet);
-  this.sortAccesoriesBonus(this.INVENTORY.itemSet.accesories);
-}
 
-private sortSetBonus(item:ITEM){
-    switch (item.type) {
-      case "WEAPON":
-        this.addWeaponBonus(item);
-        if(item.statBonus!=null&&item.statBonus!=undefined){
-          this.addStatBonus(item);
-        }
-        break;
-      case "HELMET":
-        this.addArmourBonus(item);
-        if(item.statBonus!=null&&item.statBonus!=undefined){
-          this.addStatBonus(item);
-        }
-        break;
-      case "CHEST":
-        this.addArmourBonus(item);
-        if(item.statBonus!=null&&item.statBonus!=undefined){
-          this.addStatBonus(item);
-        }
-        break;
-      case "GLOVES":
-        this.addArmourBonus(item);
-        if(item.statBonus!=null&&item.statBonus!=undefined){
-          this.addStatBonus(item);
-        }
-        break;
-      case "PANTS":
-        this.addArmourBonus(item);
-        if(item.statBonus!=null&&item.statBonus!=undefined){
-          this.addStatBonus(item);
-        }
-        break;
-      case "BOOTS":
-        this.addArmourBonus(item);
-        if(item.statBonus!=null&&item.statBonus!=undefined){
-          this.addStatBonus(item);
-        }
-        break;
-      default: break;
+getItemsfromSet(){
+  let itemSet= {helmet:this.INVENTORY.bag[this.INVENTORY.itemSet.helmet],
+    gloves:this.INVENTORY.bag[this.INVENTORY.itemSet.gloves],
+    pants:this.INVENTORY.bag[this.INVENTORY.itemSet.pants],
+    chest:this.INVENTORY.bag[this.INVENTORY.itemSet.chest],
+    boots:this.INVENTORY.bag[this.INVENTORY.itemSet.boots],
+    main:this.INVENTORY.bag[this.INVENTORY.itemSet.main],
+    secondary:this.INVENTORY.bag[this.INVENTORY.itemSet.secondary],
+    accessories:null};
+  return itemSet
+}
+private loadEquipmentBonus(itemSet){
+  let armourBonus=0;
+  let bonusDefense =0;
+  if(null!=itemSet.helmet&&undefined!=itemSet.helmet){
+    armourBonus+= Number(itemSet.helmet.skillBonus);
+    bonusDefense+= Number(itemSet.helmet.defenseBonus);
+  }
+  if(null!=itemSet.chest&&undefined!=itemSet.chest){
+    armourBonus+= Number(itemSet.chest.skillBonus);
+    bonusDefense+= Number(itemSet.chest.defenseBonus);
+  }
+  if(null!=itemSet.gloves&&undefined!=itemSet.gloves){
+    armourBonus+= Number(itemSet.gloves.skillBonus);
+    bonusDefense+= Number(itemSet.gloves.defenseBonus);
+  }
+  if(null!=itemSet.pants&&undefined!=itemSet.pants){
+    armourBonus+= Number(itemSet.pants.skillBonus);
+    bonusDefense+= Number(itemSet.pants.defenseBonus);
+  }
+  if(null!=itemSet.boots&&undefined!=itemSet.boots){
+    armourBonus+= Number(itemSet.boots.skillBonus);
+    bonusDefense+= Number(itemSet.boots.defenseBonus);
+  }
+  let secondaryBonus=0;
+  if(null!=itemSet.secondary&&undefined!=itemSet.secondary){
+    let secondary = itemSet.secondary;
+    if(secondary.type=="WEAPON"){
+      secondaryBonus= Number(secondary.skillBonus );
+      bonusDefense+= Number(secondary.defenseBonus );
+    }else{
+      bonusDefense+= Number(secondary.defenseBonus );
     }
+  }
+  if(null!=itemSet.main&&undefined!=itemSet.main) {
+    this.addWeaponBonus(itemSet.main, secondaryBonus);
+  }
+  this.setArmourBonus(armourBonus);
+  this.DEFENSE.BDB=bonusDefense;
+  // this.sortAccessoriesBonus(itemSet.accessories);
 }
 
-private addArmourBonus(item:ITEM){
-    switch (item.subType){
+private noMovementBonus(){
+  this.MOVEMENT.BNA=0;
+  this.MOVEMENT.BLE=0;
+  this.MOVEMENT.BHL=0;
+  this.MOVEMENT.BCM=0;
+  this.MOVEMENT.BPL=0;
+
+}
+
+private setArmourBonus(bonus){
+    switch (this.equipedArmour){
       case  "NA":
-        this.MOVEMENT.BNA += item.skillBonus;
+        this.MOVEMENT.BNA = bonus;
+        this.MOVEMENT.BLE=0;
+        this.MOVEMENT.BHL=0;
+        this.MOVEMENT.BCM=0;
+        this.MOVEMENT.BPL=0;
         break;
       case  "LE":
-        this.MOVEMENT.BLE += item.skillBonus;
+        if(this.MOVEMENT.LE!=0){
+          this.MOVEMENT.BLE = bonus;
+          this.MOVEMENT.BNA=0;
+          this.MOVEMENT.BHL=0;
+          this.MOVEMENT.BCM=0;
+          this.MOVEMENT.BPL=0;
+        }else{
+          this.noMovementBonus();
+        }
         break;
       case  "HL":
-        this.MOVEMENT.BHL += item.skillBonus;
+        if(this.MOVEMENT.HL!=0) {
+          this.MOVEMENT.BHL = bonus;
+          this.MOVEMENT.BLE=0;
+          this.MOVEMENT.BNA=0;
+          this.MOVEMENT.BCM=0;
+          this.MOVEMENT.BPL=0;
+        }else{
+          this.noMovementBonus()
+        }
         break;
       case  "CM":
-        this.MOVEMENT.BCM += item.skillBonus;
+        if(this.MOVEMENT.CM!=0) {
+          this.MOVEMENT.BCM = bonus;
+          this.MOVEMENT.BLE=0;
+          this.MOVEMENT.BHL=0;
+          this.MOVEMENT.BNA=0;
+          this.MOVEMENT.BPL=0;
+        }else{
+          this.noMovementBonus()
+        }
         break;
       case  "PL":
-        this.MOVEMENT.BPL += item.skillBonus;
+        if(this.MOVEMENT.PL!=0) {
+          this.MOVEMENT.BPL = bonus;
+          this.MOVEMENT.BLE=0;
+          this.MOVEMENT.BHL=0;
+          this.MOVEMENT.BCM=0;
+          this.MOVEMENT.BNA=0;
+        }else{
+          this.noMovementBonus()
+        }
         break;
       default: break;
     }
   }
-  private addWeaponBonus(item:ITEM){
+
+  private noWeaponBonus(){
+    this.WEAPONS.BIED = 0;
+    this.WEAPONS.BIPO = 0;
+    this.WEAPONS.BIPRO = 0;
+    this.WEAPONS.BITH = 0;
+    this.WEAPONS.BITHR = 0;
+    this.WEAPONS.BIBL = 0;
+
+  }
+private addWeaponBonus(item:ITEM,secondaryBonus){
+  switch (item.subType){
+    case "ED":
+      if(this.WEAPONS.ED!=0) {
+        this.WEAPONS.BIED = (Number(item.skillBonus) + secondaryBonus);
+        this.WEAPONS.BIPO = 0;
+        this.WEAPONS.BIPRO = 0;
+        this.WEAPONS.BITH = 0;
+        this.WEAPONS.BITHR = 0;
+        this.WEAPONS.BIBL = 0;
+      }else {
+        this.noWeaponBonus()
+      }
+      break;
+    case "BL":
+      if(this.WEAPONS.BL!=0) {
+        this.WEAPONS.BIBL = (Number(item.skillBonus) + secondaryBonus);
+        this.WEAPONS.BIPO = 0;
+        this.WEAPONS.BIPRO = 0;
+        this.WEAPONS.BITH = 0;
+        this.WEAPONS.BITHR = 0;
+        this.WEAPONS.BIED = 0;
+      }else {
+        this.noWeaponBonus()
+      }
+      break;
+    case "TH":
+      if(this.WEAPONS.TH!=0) {
+      this.WEAPONS.BITH = (item.skillBonus);
+      this.WEAPONS.BIPO=0;
+      this.WEAPONS.BIPRO=0;
+      this.WEAPONS.BIED=0;
+      this.WEAPONS.BITHR=0;
+      this.WEAPONS.BIBL=0;
+      }else {
+        this.noWeaponBonus()
+      }
+      break;
+    case "THR":
+      if(this.WEAPONS.THR!=0) {
+      this.WEAPONS.BITHR = (item.skillBonus);
+      this.WEAPONS.BIPO=0;
+      this.WEAPONS.BIPRO=0;
+      this.WEAPONS.BITH=0;
+      this.WEAPONS.BIED=0;
+      this.WEAPONS.BIBL=0;
+      }else {
+        this.noWeaponBonus()
+      }
+      break;
+    case "PRO":
+      if(this.WEAPONS.PRO!=0) {
+      this.WEAPONS.BIPRO = (item.skillBonus);
+      this.WEAPONS.BIPO=0;
+      this.WEAPONS.BIED=0;
+      this.WEAPONS.BITH=0;
+      this.WEAPONS.BITHR=0;
+      this.WEAPONS.BIBL=0;
+      }else {
+        this.noWeaponBonus()
+      }
+      break;
+    case "PO":
+      if(this.WEAPONS.PO!=0) {
+      this.WEAPONS.BIPO = (item.skillBonus);
+      this.WEAPONS.BIED=0;
+      this.WEAPONS.BIPRO=0;
+      this.WEAPONS.BITH=0;
+      this.WEAPONS.BITHR=0;
+      this.WEAPONS.BIBL=0;
+      }else {
+        this.noWeaponBonus()
+      }
+      break;
+  }
 
 }
-  private addStatBonus(item:ITEM){
 
-}
 
 public getDiceRoll(dice:number,max:number) {
     this.rolls[dice].value = Math.floor(Math.random() * max)+1 ;
@@ -244,12 +399,12 @@ public updateResutls(value:number,stat:string){
 	};
 
 	saveCharacter(){
-		if(!this.afService.isGameMaster()){
+		// if(!this.afService.isGameMaster()){
 
 			this.CHARACTER_KEY = this.afService.saveCharacter(this.CHARACTER_KEY,this.STATS,this.PERCEPTION,
 			this.HEALTH,this.MOVEMENT,this.WEAPONS,this.GENERALS,
 			this.SUBTREFUGE,this.MAGIC,this.DEFENSE,this.NAME,this.equipedArmour, this.INVENTORY)
-		}
+		// }
 	}
 
 	loadCharacter(char){
@@ -267,6 +422,7 @@ public updateResutls(value:number,stat:string){
 			this.DEFENSE = char.defense;
 			this.NAME = char.name;
 			this.equipedArmour = char.armourType;
+			this.INVENTORY=char.inventory;
 
 		}
 

@@ -1,0 +1,64 @@
+<!--
+  Generated template for the ItemCreationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button clear color="dark" (click)="goBack()" ion-button side="left" col-1 menuClose>
+      <ion-icon name="arrow-back"> </ion-icon>
+    </button>
+    <ion-title>Item Creation</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+    <ion-input placeholder="Item name" type="text" [(ngModel)]="newItem.name"></ion-input>
+  </ion-item>
+  <ion-item *ngIf="checkName()">
+    <ion-select multiple="false" [(ngModel)]="newItem.type"  (ngModelChange)="!loadSubType()" placeholder="Select Item Type">
+      <ion-option  value="Weapon">Weapon</ion-option>
+      <ion-option  value="Helmet">Helmet</ion-option>
+      <ion-option  value="Chest">Chest</ion-option>
+      <ion-option  value="Gloves">Gloves</ion-option>
+      <ion-option  value="Pants">Pants</ion-option>
+      <ion-option  value="Boots">Boots</ion-option>
+      <ion-option  value="Shield">Shield</ion-option>
+      <!--<ion-option  value="Accessory">Accessory</ion-option>-->
+    </ion-select>
+  </ion-item>
+  <ion-item *ngIf="checkType()">
+    <ion-item>
+      <ion-select multiple="false" [(ngModel)]="newItem.subType" placeholder="Select Sub-Type">
+        <ion-option *ngFor="let subtype of subTypeToSelect" [value]="subtype.value">{{subtype.description}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-item>
+  <ion-item *ngIf="checkTwoHanded()">
+  <ion-label> Two handed </ion-label>
+  <ion-checkbox  [(ngModel)]="newItem.twoHanded"> </ion-checkbox>
+  </ion-item>
+  <ion-item *ngIf="checkSubType()" color="warning"> Each point represent a +5 bonus</ion-item>
+  <ion-item *ngIf="checkSubType()">
+    <ion-label>Defense Bonus</ion-label>
+    <ion-input type="number" step="5"
+               [(ngModel)]="newItem.defenseBonus" min="0" max="50"></ion-input>
+  </ion-item>
+  <ion-item *ngIf="checkSubType()&& checkShield()">
+    <ion-label>Skill Bonus</ion-label>
+    <ion-input   type="number" step="5" [ngModelOptions]="{standalone: true}"
+    [(ngModel)]="newItem.skillBonus" min="0" max="50"> </ion-input>
+  </ion-item>
+
+  <ion-item *ngIf="checkSubType()">
+    <ion-label>Description</ion-label>
+    <ion-textarea type="text" [(ngModel)]="newItem.description"></ion-textarea>
+  </ion-item>
+  <button offset-md-5 *ngIf="checkSubType()" ion-button color="danger" (click)="create()"> Create </button>
+
+</ion-content>
