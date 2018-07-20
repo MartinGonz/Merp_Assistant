@@ -16,7 +16,7 @@
 	<div class="com-md-12 row">
 		<input class="col-md-3 mr-5" type="string" [ngModelOptions]="{standalone: true}" [(ngModel)]="NAME" placeholder="Character Name">
 
-    <button ion-button color="dark" class="btn btn-default" (click)="openInventory()">Inventory</button>
+    <button *ngIf="gameIsLoaded()" ion-button color="dark" class="btn btn-default" (click)="openInventory()">Inventory</button>
   </div>
 <!--ROW CONTAINS PERCEPTION, HALTH, MOVEMENT AND STATS-->
 	<div class="row mt-2 form-group">
@@ -77,7 +77,7 @@
 				  	<ion-col><input   [disabled]="!armourType('NA')" (ngModelChange)="!setStats(MOVEMENT.NA,0,MOVEMENT.BNA,0,MOVEMENT.RNA,0)" type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.BNA" min="0"  max="20" ></ion-col>
 				    <ion-col><input   [disabled]="!armourType('NA')" (ngModelChange)="!setStats(MOVEMENT.NA,0,MOVEMENT.BNA,0,MOVEMENT.RNA,0)" type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.RNA" min="0"  max="20" ></ion-col>
 					<ion-col>{{result[0].ability5 - result[0].reduction + result[0].bonusMix + result[0].stat}} MM </ion-col>
-				  	<ion-col><button ion-button color="dark" class="btn btn-default btn-xs" (click)="!setEquipedArmour('NA')">select</button></ion-col>
+				  	<ion-col><button style="padding:0" ion-button small color="dark"  (click)="!setEquipedArmour('NA')">select</button></ion-col>
 				  </ion-row>
 				   <ion-row justify-content-around>
 				  	<ion-col>Leather</ion-col>
@@ -85,7 +85,7 @@
 				  	<ion-col><input   [disabled]="!armourType('LE')" (ngModelChange)="!setStats(MOVEMENT.LE,0,MOVEMENT.BLE,0,MOVEMENT.RLE,1)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.BLE" min="0"  max="20"></ion-col>
 				  	<ion-col><input   [disabled]="!armourType('LE')" (ngModelChange)="!setStats(MOVEMENT.LE,0,MOVEMENT.BLE,0,MOVEMENT.RLE,1)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.RLE" min="0"  max="20"></ion-col>
 					<ion-col>{{result[1].ability5 - result[1].reduction + result[1].bonusMix + result[1].stat -15}} MM </ion-col>
-				  	<ion-col><button ion-button color="dark" class="btn btn-default btn-xs" (click)="!setEquipedArmour('LE')">select</button></ion-col>
+				  	<ion-col><button style="padding:0" ion-button small color="dark" (click)="!setEquipedArmour('LE')">select</button></ion-col>
 				  </ion-row>
 				   <ion-row justify-content-around>
 				  	<ion-col>Hardened Leather</ion-col>
@@ -93,7 +93,7 @@
 				  	<ion-col><input   [disabled]="!armourType('HL')" (ngModelChange)="!setStats(MOVEMENT.HL,0,MOVEMENT.BHL,0,MOVEMENT.RHL,2)"   type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.BHL" min="0"  max="20"></ion-col>
 				  	<ion-col><input   [disabled]="!armourType('HL')" (ngModelChange)="!setStats(MOVEMENT.HL,0,MOVEMENT.BHL,0,MOVEMENT.RHL,2)"   type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.RHL" min="0"  max="20"></ion-col>
 					  <ion-col>{{result[2].ability5 - result[2].reduction + result[2].bonusMix + result[2].stat - 30}} MM </ion-col>
-				  	<ion-col><button ion-button color="dark"  class="btn btn-default btn-xs" (click)="!setEquipedArmour('HL')">select</button></ion-col>
+				  	<ion-col><button style="padding:0" ion-button small color="dark" (click)="!setEquipedArmour('HL')">select</button></ion-col>
 				  </ion-row>
 				   <ion-row justify-content-around>
 				  	<ion-col>Chain Mail</ion-col>
@@ -101,7 +101,7 @@
 				  	<ion-col><input   [disabled]="!armourType('CM')" (ngModelChange)="!setStats(MOVEMENT.CM,0,MOVEMENT.BCM,0,MOVEMENT.RCM,3)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.BCM" min="0"  max="20"></ion-col>
 				  	<ion-col><input   [disabled]="!armourType('CM')" (ngModelChange)="!setStats(MOVEMENT.CM,0,MOVEMENT.BCM,0,MOVEMENT.RCM,3)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.RCM" min="0"  max="20"></ion-col>
 					  <ion-col>{{result[3].ability5 - result[3].reduction + result[3].bonusMix + result[3].stat -45}} MM </ion-col>
-				  	<ion-col><button ion-button color="dark" class="btn btn-default btn-xs" (click)="!setEquipedArmour('CM')">select</button></ion-col>
+				  	<ion-col><button style="padding:0" ion-button small color="dark"  (click)="!setEquipedArmour('CM')">select</button></ion-col>
 				  </ion-row>
 				   <ion-row justify-content-around>
 				  	<ion-col>Plate</ion-col>
@@ -109,7 +109,7 @@
 				  	<ion-col><input   [disabled]="!armourType('PL')" (ngModelChange)="!setStats(MOVEMENT.PL,0,MOVEMENT.BPL,0,MOVEMENT.RPL,4)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.BPL" min="0"  max="20"></ion-col>
 				  	<ion-col><input   [disabled]="!armourType('PL')" (ngModelChange)="!setStats(MOVEMENT.PL,0,MOVEMENT.BPL,0,MOVEMENT.RPL,4)"  type="number" step="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="MOVEMENT.RPL" min="0"  max="20"></ion-col>
 					  <ion-col>{{result[4].ability5 - result[4].reduction + result[4].bonusMix + result[4].stat -60}} MM </ion-col>
-				  	<ion-col><button ion-button color="dark" class="btn btn-default btn-xs"	 (click)="!setEquipedArmour('PL')">select</button></ion-col>
+				  	<ion-col><button  style="padding:0" ion-button small color="dark"	 (click)="!setEquipedArmour('PL')">select</button></ion-col>
 				  </ion-row>
 
 			</ion-grid>
@@ -392,45 +392,46 @@
 			</div>
   </div>
   <!-- ROW CONTAINS DICE AND SAVE-->
-  <div class="row  mt-2 form-group">
-			<div class="btn-group col-md- mr-4 mt-5">
-          <div class="pull-left col-md-4 mr-2">
-						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(0,100)">D100</button>
-					<div class="pull-rigth col-md-1">{{rolls[0].value}}</div>
-					</div>
-					<div class="pull-left col-md-4 ml-2">
-						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(1,20)">D20</button>
-						<div class="pull-rigth col-md-1">{{rolls[1].value}}</div>
-					</div>
-					<div class="pull-left col-md-4 ml-2">
-						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(2,12)">D12</button>
-						<div class="pull-rigth col-md-1">{{rolls[2].value}}</div>
-					</div>
-      </div>
-      <div class="btn-group col-md-12 mt-5 ">
-					<div class="pull-left col-md-4 mr-2">
-						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(3,10)" >D10</button>
-						<div class="pull-rigth col-md-1">{{rolls[3].value}}</div>
-					</div>
-					<div class="pull-left col-md-4 ml-3">
-						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(4,8)">D8</button>
-						<div class="pull-rigth col-md-1">{{rolls[4].value}}</div>
-					</div>
-					<div class="pull-left col-md-4 ml-4">
-						<button ion-button color="dark" class="btn btn-default btn-md" (click)="getDiceRoll(5,4)">D4</button>
-						<div class="pull-rigth col-md-1">{{rolls[5].value}}</div>
-					</div>
-      </div>
-      <div class="btn-group col-md-12 mt-5 ">
-					<div class="pull-left col-md-3">
-						<button ion-button color="dark" class="pull-left btn btn-default btn-md" (click)="getDiceRoll(6,2)">Coin</button>
-						<p class="pull-left pl-2 mt-2 ">{{coin[rolls[6].value].state}}</p>
-					</div>
-			  <div class="col-md-2 offset-2 mt-5">
-					<button ion-button color="danger" class="btn btn-danger " (click)="saveCharacter()">SAVE CHARACTER</button>
-			  </div>
-			</div>
-		</div>
+  <div >
+    <ion-list float-start no-lines col-6>
+      <ion-item float-start align-items-center justify-content-around>
+        <button no-padding ion-button color="dark" float-center  style="margin-bottom: 15px" (click)="getDiceRoll(0,100)">D100</button>
+        <ion-col >{{rolls[0].value}}</ion-col>
+      </ion-item>
+      <ion-item float-start>
+        <button no-padding ion-button color="dark" float-center  style="margin-bottom: 15px" (click)="getDiceRoll(1,20)">D20</button>
+        <ion-col >{{rolls[1].value}}</ion-col>
+      </ion-item>
+      <ion-item float-start>
+        <button no-padding ion-button color="dark" float-center  style="margin-bottom: 15px" (click)="getDiceRoll(2,12)">D12</button>
+        <ion-col >{{rolls[2].value}}</ion-col>
+      </ion-item>
+      <ion-item no-padding  style="padding-left: 15px" float-start >
+        <button no-padding ion-button color="dark" float-start style="margin-bottom: 15px" (click)="getDiceRoll(6,2)">Coin</button>
+        <ion-col no-padding >{{coin[rolls[6].value].state}}</ion-col>
+      </ion-item>
+    </ion-list>
+    <ion-list float-start no-lines col-6>
+      <ion-item float-start align-items-center justify-content-around>
+        <button no-padding ion-button color="dark" float-center  style="margin-bottom: 15px" (click)="getDiceRoll(3,10)">D100</button>
+        <ion-col >{{rolls[3].value}}</ion-col>
+      </ion-item>
+      <ion-item float-start>
+        <button no-padding ion-button color="dark" float-center  style="margin-bottom: 15px" (click)="getDiceRoll(4,8)">D20</button>
+        <ion-col >{{rolls[4].value}}</ion-col>
+      </ion-item>
+      <ion-item float-start>
+        <button no-padding ion-button color="dark" float-center  style="margin-bottom: 15px" (click)="getDiceRoll(5,4)">D12</button>
+        <ion-col >{{rolls[5].value}}</ion-col>
+      </ion-item>
+      <ion-item>
+        <div  float-end class="col-md-2 offset-2 mt-5">
+          <button ion-button color="danger"  (click)="saveCharacter()">SAVE CHARACTER</button>
+        </div>
+      </ion-item>
+    </ion-list>
+
+  </div>
 </div>
 </form>
 

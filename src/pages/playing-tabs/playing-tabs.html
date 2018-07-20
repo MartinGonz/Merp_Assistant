@@ -1,17 +1,19 @@
 
 <ion-header>
-  <ion-navbar>
-      <ion-icon col-2  menuToggle item-start class="m-0 p-0"> <img [src]="menuIcon"> </ion-icon>
-    <ion-title>Playing Board</ion-title>
+  <ion-navbar menuToggle  justify-content-start>
+    <ion-buttons col-2 left>
+      <ion-icon align-items-baseline class=" m-0 p-0"> <img [src]="menuIcon"> </ion-icon>
+    </ion-buttons>
+    <ion-title >Playing Board</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content  padding>
 <ion-tabs >
-    <ion-tab *ngIf="!isGM()" [root]="charSheetRoot" tabTitle="Character" tabIcon="md-walk"></ion-tab>
-    <ion-tab *ngIf="isGM()" [root]="notesRoot" tabTitle="Notes" tabIcon="md-paper"></ion-tab>
-    <ion-tab [root]="tableRoot" tabTitle="Table" tabIcon="md-bonfire"></ion-tab>
-    <ion-tab [root]="chatRoot" tabTitle="Chat" tabIcon="md-beer"></ion-tab>
+    <ion-tab *ngIf="!isGM()" [root]="charSheetRoot" tabTitle="Character" tabIcon="walk"></ion-tab>
+    <ion-tab *ngIf="isGM()" [root]="notesRoot" tabTitle="Notes" tabIcon="paper"></ion-tab>
+    <ion-tab [root]="tableRoot" tabTitle="Table" tabIcon="bonfire"></ion-tab>
+    <ion-tab [root]="chatRoot" tabTitle="Chat" tabIcon="beer"></ion-tab>
 </ion-tabs>
 
 </ion-content>

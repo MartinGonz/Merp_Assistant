@@ -12,41 +12,45 @@ import {EQUIPMENT, InventoryPage, ITEM} from "../inventory/inventory";
 export class CharacterSheet  {
 
   constructor( public modalCtrl:ModalController,public afService:AF,public navParams:NavParams,public navCtl:NavController, public menuCtl: MenuController) {
-		var character = this.afService.selectedCharacter
 
-    if(character==null){
-			this.resetSheet()
-			this.result = this.getResult()
-		}else{
-			this.loadCharacter(character)
-			this.result = this.getResult()
-		}
-    if(this.INVENTORY.bag==undefined) {
-		  this.INVENTORY.bag=new Array();
-      this.INVENTORY.bag.push({
-        type: "Base",
-        subType:"Base",
-        name: "Starter Equipment",
-        skillBonus: 0,
-        defenseBonus: 0,
-        twoHanded: false,
-        description:"Generic equipment of your choosing, no bonus or anything special"
-      })
-    }
-		if(this.INVENTORY.itemSet==undefined){
-		  this.INVENTORY.itemSet={helmet:0,
-                              gloves:0,
-                              pants:0,
-                              chest:0,
-                              boots:0,
-                              main:0,
-                              secondary:0,
-                              accessories:0}
-    }if(this.INVENTORY.coins==undefined){
-		  this.INVENTORY.coins={gold:0,
-                            silver:0,
-                            bronze:0,
-                            copper:0}
+
+      var character = this.afService.selectedCharacter
+
+      if(character==null){
+        this.resetSheet()
+        this.result = this.getResult()
+      }else{
+        this.loadCharacter(character)
+        this.result = this.getResult()
+      }
+    if(this.gameIsLoaded()){
+      if(this.INVENTORY.bag==undefined) {
+        this.INVENTORY.bag=new Array();
+        this.INVENTORY.bag.push({
+          type: "Base",
+          subType:"Base",
+          name: "Starter Equipment",
+          skillBonus: 0,
+          defenseBonus: 0,
+          twoHanded: false,
+          description:"Generic equipment of your choosing, no bonus or anything special"
+        })
+      }
+      if(this.INVENTORY.itemSet==undefined){
+        this.INVENTORY.itemSet={helmet:0,
+          gloves:0,
+          pants:0,
+          chest:0,
+          boots:0,
+          main:0,
+          secondary:0,
+          accessories:0}
+      }if(this.INVENTORY.coins==undefined){
+        this.INVENTORY.coins={gold:0,
+          silver:0,
+          bronze:0,
+          copper:0}
+      }
     }
 	}
 
@@ -114,6 +118,11 @@ public coin = [{state:'-----'},
 public result ;
 
 public equipedArmour = 'NA';
+
+  gameIsLoaded(){
+    let result =  (this.afService.currentGame!=null)&&(this.afService.currentGame!=undefined)
+    return result
+  }
 
 public openInventory(){
   let modal = this.modalCtrl.create(InventoryPage,{armourType:this.equipedArmour,owner:this.owner});
