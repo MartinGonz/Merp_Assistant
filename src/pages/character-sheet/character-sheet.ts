@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {AF} from './../../providers/af';
-import {NavController, MenuController, ModalController} from 'ionic-angular';
+import {NavController, MenuController, ModalController, NavParams} from 'ionic-angular';
 import {EQUIPMENT, InventoryPage, ITEM} from "../inventory/inventory";
 
 
@@ -11,7 +11,7 @@ import {EQUIPMENT, InventoryPage, ITEM} from "../inventory/inventory";
 
 export class CharacterSheet  {
 
-  constructor( public modalCtrl:ModalController,public afService:AF,public navCtl:NavController, public menuCtl: MenuController) {
+  constructor( public modalCtrl:ModalController,public afService:AF,public navParams:NavParams,public navCtl:NavController, public menuCtl: MenuController) {
 		var character = this.afService.selectedCharacter
 
     if(character==null){
@@ -35,18 +35,28 @@ export class CharacterSheet  {
     }
 		if(this.INVENTORY.itemSet==undefined){
 		  this.INVENTORY.itemSet={helmet:0,
-        gloves:0,
-        pants:0,
-        chest:0,
-        boots:0,
-        main:0,
-        secondary:0,
-        accessories:0}
+                              gloves:0,
+                              pants:0,
+                              chest:0,
+                              boots:0,
+                              main:0,
+                              secondary:0,
+                              accessories:0}
+    }if(this.INVENTORY.coins==undefined){
+		  this.INVENTORY.coins={gold:0,
+                            silver:0,
+                            bronze:0,
+                            copper:0}
     }
 	}
 
 public INVENTORY:{itemSet:EQUIPMENT,
-                  bag:ITEM[]};
+                  bag:ITEM[],
+                  coins:{gold:number;
+                    silver:number;
+                    bronze:number;
+                    copper:number;}
+                    };
 
 public CHARACTER_KEY:string ="";
 
@@ -106,7 +116,7 @@ public result ;
 public equipedArmour = 'NA';
 
 public openInventory(){
-  let modal = this.modalCtrl.create(InventoryPage,{armourType:this.equipedArmour});
+  let modal = this.modalCtrl.create(InventoryPage,{armourType:this.equipedArmour,owner:this.owner});
   modal.onDidDismiss(inventory=>{
     if(null!=inventory){
       this.INVENTORY= inventory;
@@ -119,6 +129,10 @@ public openInventory(){
   modal.present();
 
 }
+
+  ionViewWillEnter(){
+    this.owner=this.navParams.get("owner");
+  }
 
 getItemsfromSet(){
   let itemSet= {helmet:this.INVENTORY.bag[this.INVENTORY.itemSet.helmet],

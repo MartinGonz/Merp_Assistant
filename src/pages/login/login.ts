@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {AlertController, NavController} from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { AF } from './../../providers/af';
 import { UserProvider } from './../../providers/user/user';
 import { HomePage } from './../../pages/home/home';
+import Error = firebase.auth.Error;
 
 
 @Component({
@@ -12,7 +13,7 @@ import { HomePage } from './../../pages/home/home';
     templateUrl: 'login.html'
 })
 
-export class LoginPage implements OnInit {   
+export class LoginPage implements OnInit {
     error;
 
    public user:string;
@@ -23,37 +24,39 @@ export class LoginPage implements OnInit {
    public userName:string;
    public passwordCreate:string;
 
-    constructor(public afAuth: AngularFireAuth,public af: AF, public navCtrl:NavController, public userProvider:UserProvider ) {
+    constructor(public afAuth: AngularFireAuth,public af: AF, public navCtrl:NavController,
+                public userProvider:UserProvider, public alertCtrl:AlertController ) {
     }
 
     ngOnInit() { }
     onClickLogingWithUserAndPass(){
-       
+
         this.afAuth.auth.signInWithEmailAndPassword(this.user,this.password)
-            .then(user =>  this.successHandler())
-            .catch(e => this.errorHandler(e));
-      
+            .then(user =>  this.successHandler()).catch(e => this.errorHandler(e));
+
     }
 
     onClickLoginWithGoogle() {
           this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-            .then(() => this.successHandler())
-            .catch(e => this.errorHandler(e));
+            .then(() => this.successHandler()).catch(e => this.errorHandler(e));
     }
 
     onClickLoginWithFacebook() {
         this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
-            .then(() => this.successHandler())
-            .catch(e => this.errorHandler(e));        
+            .then(() => this.successHandler()).catch(e => this.errorHandler(e));
     }
 
     createUser(){
          if (this.passwordCreate==this.passwordConfirm) {
         this.afAuth.auth.createUserWithEmailAndPassword(this.userCreate,this.passwordCreate)
         .then(() =>   this.afAuth.auth.signInWithEmailAndPassword(this.userCreate,this.passwordCreate)
-            .then(() => this.successCreationHandler()))
-        .catch(e => this.errorHandler(e));} else {
-            this.error = "Password and Confirmation do not match"}
+            .then(() => this.successCreationHandler())).catch(e => this.errorHandler(e));} else {
+           let alert=this.alertCtrl.create({
+             title:'Error',
+             message: "Password and Confirmation do not match",
+             buttons:['OK']
+           })
+           alert.present()}
     }
 
     successHandler() {
@@ -88,8 +91,12 @@ export class LoginPage implements OnInit {
         })
     }
     errorHandler(e) {
-        console.log('error: ', e);
-        this.error = e.message;
+      let alert=this.alertCtrl.create({
+        title:'Error',
+        message: e.message,
+        buttons:['OK']
+      })
+      alert.present()
         this.af.zoneRun();
     }
 }

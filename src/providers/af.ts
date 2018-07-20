@@ -17,6 +17,12 @@ export interface USER_TO_DISPLAY{
   userId:string;
   character:any;
 }
+export interface INVENTORY{
+  itemSet:any;
+  bag:any[];
+  coins:any;
+}
+
 
 @Injectable()
 export class AF {
@@ -285,11 +291,21 @@ export class AF {
     return this.saveCharacter("",char.stats,char.perception,char.health,char.movement,char.weapons,char.generals,char.subtrefuge,char.magic,char.defense,'',char.armourType,char.inventory)
   }
 
-  getInventory(){
-    return this.selectedCharacter.inventory;
+  getInventory(owner:string){
+    let inventory={} as INVENTORY;
+    if(this.selectedCharacter.inventory==undefined&&this.isGM&&owner!=undefined){
+     this.db.object('users/'+owner+'/characters/'+this.selectedCharacter.key+'/inventory').forEach(element=>{
+       inventory.itemSet=element.itemSet
+       inventory.bag=element.bag
+       inventory.coins=element.coins
+     })
+    }else {
+      inventory=this.selectedCharacter.inventory;
+    }
+    return inventory;
   }
   saveInventory(uid:string,inventory:any){
-    const inventoryFromDb =   this.db.object('users/'+uid+'characters/'+this.selectedCharacter.key+'inventory/')
+    const inventoryFromDb =   this.db.object('users/'+uid+'/characters/'+this.selectedCharacter.key+'/inventory/')
     inventoryFromDb.update(inventory);
     console.log(inventory);
   }

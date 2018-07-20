@@ -1,14 +1,54 @@
 <ion-header>
-  <ion-navbar>
-    <ion-icon col-2 menuToggle class="m-0 p-0"> <img [src]="menuIcon"> </ion-icon>
-    <ion-title>Home</ion-title>
+  <ion-navbar menuToggle  justify-content-start>
+    <ion-buttons col-2 left>
+      <ion-icon align-items-baseline class=" m-0 p-0"> <img [src]="menuIcon"> </ion-icon>
+    </ion-buttons>
+    <ion-title >Home</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+<br>
+  <!-- CREATE GAME AND CURRENT GAME-->
+  <ion-row col-12>
+  <ion-card (click)="goCreateGame()" class="dark-item" col-5 style="margin-left: 10px; " >
+    <img height="120,67" [src]="createGameImg">
+    <ion-card-content  text-center>
+      <div  align-items-center class="p-0 dark-item "  style=" font-size: 3vh;" >
+          Create Game
+      </div>
+    </ion-card-content>
+  </ion-card>
 
-  <button ion-button color="dark" class="btn btn-default" (click)="goCharacterSheet()">New Character</button>
+  <ion-card (click)="goCurrentGames()" class="dark-item " style="margin-top: 10px;margin-left: 10px; margin-right:0" col-5>
+    <img  height="120,67" [src]="currentGameImg">
+    <ion-card-content  text-center>
+      <div  align-items-center class="p-0 dark-item " style="font-size: 3vh">
+        Current Games
+      </div>
+    </ion-card-content>
+  </ion-card>
+  </ion-row>
+  <br>
+  <ion-row col-12>
+    <ion-card (click)="goCritsAndDamage()" class="dark-item" col-5 style="margin-left: 10px; " >
+      <img height="120,67" [src]="critAndDmgImg">
+      <ion-card-content  text-center>
+        <div  align-items-center class="p-0 dark-item "  style=" font-size: 3vh;" >
+          Crits & Damage
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-  <button ion-button color="dark" class="btn btn-default" (click)="goCharactersPage()">Select Character</button>
+    <ion-card (click)="goGameInvites()" class="dark-item " style="margin-top: 10px;margin-left: 10px; margin-right:0" col-5>
+      <img  height="120,67" [src]="invitesImg">
+      <ion-card-content  text-center>
+        <div  align-items-center class="p-0 dark-item " style="font-size: 3vh">
+          Game Invites
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+
 
 </ion-content>

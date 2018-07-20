@@ -46,13 +46,19 @@ export class InventoryPage {
               public viewCtrl:ViewController, public navParams: NavParams,public alertCtrl:AlertController,
               public menuCtl: MenuController) {
 
-    let inventory = this.af.getInventory();
+    this.owner=this.navParams.get("owner")
+
+    let inventory = this.af.getInventory(this.owner);
     if(inventory!=null&&inventory!=undefined){
       this.itemSet = inventory.itemSet;
       this.bag = inventory.bag;
+      this.coins= inventory.coins;
     }
   }
-
+  public coins:{gold:number;
+                silver:number;
+                bronze:number;
+                copper:number;}
   public owner:string;
   public armourType:string;
   public itemSet:EQUIPMENT;
@@ -64,9 +70,10 @@ export class InventoryPage {
 
   ionViewWillEnter(){
     this.armourType=this.navParams.get("armourType")
+
   }
   goBack(){
-    let inventory = {itemSet:this.itemSet,bag:this.bag};
+    let inventory = {itemSet:this.itemSet,bag:this.bag,coins:this.coins};
     this.saveInventory();
     this.viewCtrl.dismiss(inventory);
     this.menuCtl.close();
@@ -149,8 +156,7 @@ export class InventoryPage {
 
     modal.onDidDismiss(selected=>{
       if(selected!=null&&selected!=undefined) {
-        let itemSelected= this.bag.indexOf(selected);
-        if(selected.twoHanded){
+       if(selected.twoHanded){
           this.itemSet.main=this.bag.indexOf(selected);
           this.itemSet.secondary= 0;
         }else {

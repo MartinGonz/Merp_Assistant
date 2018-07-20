@@ -1,14 +1,15 @@
-
 <ion-header>
-  <ion-navbar>
-      <ion-icon col-1  menuToggle item-start class="m-0 p-0"> <img [src]="menuIcon"> </ion-icon>
-    <ion-title>Damage & Critical Tables</ion-title>
+  <ion-navbar menuToggle  justify-content-start>
+    <ion-buttons col-2 left>
+      <ion-icon align-items-baseline class=" m-0 p-0"> <img [src]="menuIcon"> </ion-icon>
+    </ion-buttons>
+    <ion-title >Damage & Critical Tables</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  
+
   <ion-item>
     <ion-label>Damage Table : </ion-label>
     <ion-select popover (ionChange)='loadDmgTable()' [(ngModel)]="selectedDamageTable">
@@ -32,7 +33,7 @@
         <br>
       <h1>Damage Table</h1>
       <ion-grid  >
-        <ion-row justify-content-around> 
+        <ion-row justify-content-around>
           <ion-col  col-2>
             Roll
           </ion-col>
@@ -94,14 +95,14 @@
           <ion-col col-8 >
            <p>
               {{CRITrow.result}}
-          </p> 
+          </p>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
 
     <ion-item  class ="p-0 m-0" *ngIf='failTableIsLoaded()'>
-        <br>  
+        <br>
       <h1>Fail Table</h1>
         <ion-grid>
           <ion-row justify-content-around>
@@ -119,10 +120,10 @@
             <ion-col col-8 >
              <p>
                 {{FAILrow.result}}
-            </p> 
+            </p>
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
-  
+
 </ion-content>

@@ -1,29 +1,31 @@
 
-<<ion-header>
-  <ion-navbar>
-      <ion-icon col-2 menuToggle class="m-0 p-0"> <img [src]="menuIcon"> </ion-icon>
-    <ion-title>Game Invites</ion-title>
+<ion-header>
+  <ion-navbar menuToggle  justify-content-start>
+    <ion-buttons col-2 left>
+      <ion-icon align-items-baseline class=" m-0 p-0"> <img [src]="menuIcon"> </ion-icon>
+    </ion-buttons>
+    <ion-title >Game Invites</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <div class="tabl-responsive" >
+  <div class="table-responsive" >
       <ion-list *ngFor="let invite of playerInvites | async" >
           <ion-card>
             <ion-item>
               <h2> Game : {{invite.gameName}} </h2>
               <p> Invited By {{invite.gameMaster}}  </p>
             </ion-item>
-            <ion-card-content> 
+            <ion-card-content>
               <ion-row>
                 <ion-col>
                   <button ion-button color="dark" (click)="joinGame(invite.gameKey,invite.$key)" item-start> Join Game</button>
                   <button ion-button color="danger" (click)="deleteInvite(invite.$key)" item-end> Delete</button>
                 </ion-col>
-              </ion-row>  
-            </ion-card-content> 
+              </ion-row>
+            </ion-card-content>
           </ion-card>
-      </ion-list>     
+      </ion-list>
 </div>
 </ion-content>

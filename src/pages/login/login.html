@@ -1,38 +1,41 @@
 
-<section class="page-content">
+<ion-content >
+    <ion-card justify-content-center>
+      <ion-card-title text-center> Log In</ion-card-title>
+      <ion-card-content text-center>
+        <ion-input type="email" [ngModelOptions]="{standalone: true}" [(ngModel)]="user" placeholder="Email"></ion-input>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-3" layout="row" layout-align="center">
-            <label class="col-md-6 "> LOGIN </label>
-            <input class="col-md-6 " type="email" [ngModelOptions]="{standalone: true}" [(ngModel)]="user" placeholder="Email">
+        <ion-input (keyup.enter)="onClickLogingWithUserAndPass()"
+                   type="password" [ngModelOptions]="{standalone: true}" [(ngModel)]="password" placeholder="Password"></ion-input>
 
-            <input class="col-md-6 " (keyup.enter)="onClickLogingWithUserAndPass()" type="password" [ngModelOptions]="{standalone: true}" [(ngModel)]="password" placeholder="Password">
-        
-            <button class="col-md-6 " (click)="onClickLogingWithUserAndPass()">Login</button>
-    
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 offset-3">
-            <label class="col-md-6 "> REGISTER </label>
-            <input class="col-md-6 " type="email" [ngModelOptions]="{standalone: true}" [(ngModel)]="userCreate" placeholder="Email">
+        <button  ion-button color="dark" (click)="onClickLogingWithUserAndPass()">Login</button>
+      </ion-card-content>
 
-            <input class="col-md-6 " type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="userName" placeholder="User Name">
+    </ion-card>
+    <ion-card justify-content-center>
+            <ion-card-title text-center> Register </ion-card-title>
+              <ion-card-content text-center>
+                <ion-input  type="email" [ngModelOptions]="{standalone: true}"
+                           [(ngModel)]="userCreate" placeholder="Email"></ion-input>
 
-            <input class="col-md-6 " type="password" [ngModelOptions]="{standalone: true}" [(ngModel)]="passwordCreate" placeholder="Password">
-        
-            <input class="col-md-6 " type="password" [ngModelOptions]="{standalone: true}" [(ngModel)]="passwordConfirm" placeholder="Confirm Password">
+                <ion-input type="text" [ngModelOptions]="{standalone: true}"
+                           [(ngModel)]="userName" placeholder="User Name"></ion-input>
 
-            <button class="col-md-6 " (click)="createUser()">Register</button>
-        </div>
-    </div>
+                <ion-input type="password" [ngModelOptions]="{standalone: true}"
+                           [(ngModel)]="passwordCreate" placeholder="Password"></ion-input>
+
+                <ion-input  type="password" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="passwordConfirm" placeholder="Confirm Password"></ion-input>
+
+                <button  ion-button color="dark" (click)="createUser()">Register</button>
+              </ion-card-content>
+    </ion-card>
     <div class="row">
         <div *ngIf="error" class="alert alert-warning" role="alert">
             <strong>{{ error }}</strong>
         </div>
     </div>
-</div>
+</ion-content>
 
 
 
@@ -53,4 +56,3 @@
         </span> Login with Facebook
         </div>
     </div>-->
-</section>
