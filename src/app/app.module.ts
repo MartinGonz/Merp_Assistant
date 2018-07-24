@@ -33,6 +33,7 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import {environment} from '../environments/environment';
 import {UserProvider} from '../providers/user/user';
 import {EquipItemPage} from "../pages/equip-item/equip-item";
+import {UploadImagePage} from "../pages/upload-image/upload-image";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {EquipItemPage} from "../pages/equip-item/equip-item";
     CritsAndDmgPage,
     InventoryPage,
     ItemCreationPage,
-    EquipItemPage
+    EquipItemPage,
+    UploadImagePage
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,8 @@ import {EquipItemPage} from "../pages/equip-item/equip-item";
     CritsAndDmgPage,
     InventoryPage,
     ItemCreationPage,
-    EquipItemPage
+    EquipItemPage,
+    UploadImagePage
   ],
   providers: [
     AF,

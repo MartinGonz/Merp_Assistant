@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, MenuController, NavController, NavParams, ViewController} from 'ionic-angular';
-import {ITEM} from "../inventory/inventory";
 
 
 @IonicPage()

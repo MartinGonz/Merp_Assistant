@@ -1,11 +1,11 @@
 <ion-menu [content]="content">
   <ion-header>
-    <ion-toolbar>
-        <ion-avatar col-2>
-           <img [src]="profilePic"> 
+    <ion-toolbar >
+        <ion-avatar (mousedown)="mousedown()" (mouseup)="mouseup()" (mouseleave)="mouseup()" col-3 side="left" >
+          <img class="image"[src]="profilePic">
         </ion-avatar>
+      <ion-title float-start  >{{displayName}}</ion-title>
     </ion-toolbar>
-
   </ion-header>
 
   <ion-content >

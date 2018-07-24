@@ -34,6 +34,7 @@ export class CreateGamePage {
 
   this.users = this.usersProvideer.getAllUsers();
   this.games = this.af.getAllGames();
+  console.log(this.navCtrl.length())
 
   }
 

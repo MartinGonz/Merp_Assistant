@@ -50,7 +50,7 @@ export class AF {
 
 
   constructor(private ngZone: NgZone,public db: AngularFireDatabase,public  afAuth: AngularFireAuth, public userProvider:UserProvider) {
-     db.database.goOnline();
+     // db.database.goOnline();
      afAuth.authState;
 
      }
@@ -70,6 +70,10 @@ export class AF {
 
   getProfilePic(uid:string){
     return this.db.object('users/'+uid+'/photoURL');
+  }
+
+  getUserData(uid:string){
+    return this.db.object('users/'+uid);
   }
 
   setCurrentUser(user){

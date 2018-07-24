@@ -31,16 +31,16 @@ export class HomePage  {
   }
 
   goCreateGame(){
-    this.navCtrl.setRoot(CreateGamePage);
+    this.navCtrl.push(CreateGamePage);
   }
   goCurrentGames(){
-    this.navCtrl.setRoot(CurrentGamesPage);
+    this.navCtrl.push(CurrentGamesPage);
   }
   goCritsAndDamage(){
-    this.navCtrl.setRoot(CritsAndDmgPage);
+    this.navCtrl.push(CritsAndDmgPage);
   }
   goGameInvites(){
-    this.navCtrl.setRoot(InvitesPage);
+    this.navCtrl.push(InvitesPage);
   }
 
 }

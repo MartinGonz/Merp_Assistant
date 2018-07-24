@@ -23,38 +23,20 @@ export class CharacterSheet  {
         this.loadCharacter(character)
         this.result = this.getResult()
       }
-    if(this.gameIsLoaded()){
-      if(this.INVENTORY.bag==undefined) {
-        this.INVENTORY.bag=new Array();
-        this.INVENTORY.bag.push({
-          type: "Base",
-          subType:"Base",
-          name: "Starter Equipment",
-          skillBonus: 0,
-          defenseBonus: 0,
-          twoHanded: false,
-          description:"Generic equipment of your choosing, no bonus or anything special"
-        })
-      }
-      if(this.INVENTORY.itemSet==undefined){
-        this.INVENTORY.itemSet={helmet:0,
-          gloves:0,
-          pants:0,
-          chest:0,
-          boots:0,
-          main:0,
-          secondary:0,
-          accessories:0}
-      }if(this.INVENTORY.coins==undefined){
-        this.INVENTORY.coins={gold:0,
-          silver:0,
-          bronze:0,
-          copper:0}
+    if(this.gameIsLoaded()) {
+      if (this.INVENTORY == undefined) {
+        this.INVENTORY = {
+          itemSet: this.generateItemSet(),
+          bag: this.generateBag(),
+          coins: this.generateCoins()
+        }
       }
     }
 	}
 
-public INVENTORY:{itemSet:EQUIPMENT,
+
+
+  public INVENTORY:{itemSet:EQUIPMENT,
                   bag:ITEM[],
                   coins:{gold:number;
                     silver:number;
@@ -119,9 +101,44 @@ public result ;
 
 public equipedArmour = 'NA';
 
-  gameIsLoaded(){
+gameIsLoaded(){
     let result =  (this.afService.currentGame!=null)&&(this.afService.currentGame!=undefined)
     return result
+  }
+private generateCoins() {
+    return {
+      gold: 0,
+      silver: 0,
+      bronze: 0,
+      copper: 0
+    };
+  }
+
+private generateBag() {
+    let bag = new Array();
+    bag.push({
+      type: "Base",
+      subType: "Base",
+      name: "Starter Equipment",
+      skillBonus: 0,
+      defenseBonus: 0,
+      twoHanded: false,
+      description: "Generic equipment of your choosing, no bonus or anything special"
+    })
+    return bag;
+  }
+
+private generateItemSet() {
+    return {
+      helmet: 0,
+      gloves: 0,
+      pants: 0,
+      chest: 0,
+      boots: 0,
+      main: 0,
+      secondary: 0,
+      accessories: 0
+    };
   }
 
 public openInventory(){

@@ -1,0 +1,34 @@
+<!--
+  Generated template for the UploadImagePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Select your image</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <ion-card justify-content-center class="upload">
+    <ion-card-title class="upload" >Profile Picture</ion-card-title>
+    <br>
+    <ion-avatar   class="image-upload">
+      <img src="{{picture}}">
+    </ion-avatar>
+    <br>
+    <input type="file" accept="image/*" (change)="updatePicture($event)" [(ngModel)]="uploaded">
+    <div>{{ uploadPercent | async }}</div>
+    <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
+    <ion-label>Tip: use square images to avoid deformed ugliness </ion-label>
+    <ion-item no-lines>
+      <button ion-button color="danger" (click)="changeImage()">Confirm</button>
+
+      <button ion-button color="dark" (click)="cancel()">Cancel</button>
+    </ion-item>
+  </ion-card>
+
+
+</ion-content>
