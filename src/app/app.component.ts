@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import {AlertController, Nav, Platform, ModalController} from 'ionic-angular';
+import {Nav, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -13,7 +13,6 @@ import { CurrentGamesPage} from '../pages/current-games/current-games';
 import { PlayingTabsPage } from '../pages/playing-tabs/playing-tabs';
 import { InvitesPage} from '../pages/invites/invites';
 import { CritsAndDmgPage} from '../pages/crits-and-dmg/crits-and-dmg'
-import {UploadImagePage} from "../pages/upload-image/upload-image";
 
 
 @Component({
@@ -31,7 +30,8 @@ export class MyApp {
 
   constructor(public platform: Platform,public afAuth:AngularFireAuth,
               public statusBar: StatusBar, public splashScreen: SplashScreen,private af:AF,
-              private alertCtrl:AlertController,private modalCtrl:ModalController) {
+              // private alertCtrl:AlertController,private modalCtrl:ModalController
+                      ) {
     this.initializeApp();
 
       this.pages = [
@@ -90,35 +90,35 @@ export class MyApp {
   }
 
   public mouseup() {
-    if (this.timeoutHandler) {
-      clearTimeout(this.timeoutHandler);
-      this.timeoutHandler = null;
-    }
+    // if (this.timeoutHandler) {
+    //   clearTimeout(this.timeoutHandler);
+    //   this.timeoutHandler = null;
+    // }
   }
 
   public mousedown() {
-    this.timeoutHandler = setTimeout(() => {
-      let alert = this.alertCtrl.create({
-        title:'Change profile picture ? ',
-        buttons:[{
-          text:'Confirm',
-          role:'confirm',
-          handler:()=>{
-            this.openUploadModal();
-          }
-        },
-          {
-            text:'Cancel',
-            role:'cancel'
-          }
-        ]
-      })
-      alert.present();
-      this.timeoutHandler = null;
-    }, 500);
+    // this.timeoutHandler = setTimeout(() => {
+    //   let alert = this.alertCtrl.create({
+    //     title:'Change profile picture ? ',
+    //     buttons:[{
+    //       text:'Confirm',
+    //       role:'confirm',
+    //       handler:()=>{
+    //         this.openUploadModal();
+    //       }
+    //     },
+    //       {
+    //         text:'Cancel',
+    //         role:'cancel'
+    //       }
+    //     ]
+    //   })
+    //   alert.present();
+    //   this.timeoutHandler = null;
+    // }, 500);
   }
-  private openUploadModal(){
-    let modal = this.modalCtrl.create(UploadImagePage,{picture:this.profilePic});
-    modal.present()
-  }
+  // private openUploadModal(){
+  //   let modal = this.modalCtrl.create(UploadImagePage,{picture:this.profilePic});
+  //   modal.present()
+  // }
 }

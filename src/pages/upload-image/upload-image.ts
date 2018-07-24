@@ -1,8 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-// import { AngularFireStorage } from 'angularfire2/storage';
-import {AF} from "../../providers/af";
-import { finalize } from 'rxjs/operators';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
 /**
  * Generated class for the UploadImagePage page.
@@ -21,9 +18,8 @@ export class UploadImagePage {
   uploaded=null;
   uploadPercent:any;
   downloadURL:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              // private storage: AngularFireStorage,
-              private af:AF) {
+  file:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -37,7 +33,7 @@ export class UploadImagePage {
   updatePicture(event:any){
     console.log(this.uploaded)
     if (event.target.files && event.target.files[0]) {
-      this.uploaded=event.target.files[0];
+      this.file=event.target.files[0];
       let reader = new FileReader();
       reader.onload = (event: ProgressEvent) => {
         this.picture = (<FileReader>event.target).result;
@@ -46,15 +42,13 @@ export class UploadImagePage {
     }
   }
   changeImage(){
-    // const file = this.uploaded;
-    // const filePath = '/userImages/'+this.af.currentUser;
-    // const fileRef = this.storage.ref(filePath);
-    // const task = this.storage.upload(filePath, file)
-    // // observe percentage changes
-    // this.uploadPercent = task.percentageChanges();
+    // const userImagesRef = this.firebase.storage.ref().child("userImages");
+    // let uploadTask = userImagesRef.putFile(this.file)
+    //
+    // this.uploadPercent = uploadTask.percentageChanges();
     // // get notified when the download URL is available
-    // task.snapshotChanges().pipe(
-    //   finalize(() => this.downloadURL = fileRef.getDownloadURL() )
+    // uploadTask.snapshotChanges().pipe(
+    //   finalize(() => this.downloadURL = userImagesRef.getDownloadURL() )
     // )
     //   .subscribe()
   }

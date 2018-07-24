@@ -85,7 +85,7 @@ import {UploadImagePage} from "../pages/upload-image/upload-image";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserProvider
+    UserProvider,
   ]
 })
 export class AppModule {}
